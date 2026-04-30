@@ -1,0 +1,49 @@
+# local environment
+.env
+.venv/
+venv/
+medialab_project_venv/
+
+# editor / agent state
+.vscode/
+.idea/
+.codex
+.aider*
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+
+# logs / generated output
+logs/
+*.log
+
+# data and generated research artifacts
+data/
+records/
+embeddings/
+figures/
+plots/
+outputs/
+
+# local/raw source files
+*.pdf
+*.xml
+
+# notebooks excluded from public release
+notebooks/deprecated/
+
+# deprecated/draft code excluded from public release
+src/application/deprecated/
+src/application/__pycache__
+src/config/__pycache__
+scripts/
+tests/
+notebooks/playground.ipynb
+
+# OS / backup files
+.DS_Store
+*~

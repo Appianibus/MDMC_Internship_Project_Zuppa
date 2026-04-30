@@ -1,0 +1,441 @@
+categories:
+  - category_name: no_data
+    category_description: This category includes data availability statement sections stating that no data was used, analyzed or produced during the study.
+    category_exemplars:
+      - "No data was used for the research described in the article"
+      - "No new data were created or analyzed in this study"
+      - "This manuscript has no associated data or the data will not be deposited"
+      - "Being a theoretical study, no experimental data is associated with this work"
+      - "This work does not involve any datasets. All results are derived from analytical and theoretical argument presented in the paper"
+      - "Data sharing does not apply to this article since no datasets were produced or examined in the course of this study"
+      - "My study has no associated data"
+    category_hard_positives:
+      - - >
+         "This manuscript has no associated data or the data will not be deposited, as such 
+         there is no observational data related to this article where the necessary calculations
+         and graphic discussion are already available in the manuscript"
+        - "This work does not involve any datasets. All results are derived from analytical and theoretical argument presented in the paper"
+    category_hard_negatives:
+      - - "This manuscript has no associated data"
+        - "This manuscript has no associated code/software"
+      - - "This manuscript has no associated data"
+        - "This manuscript has data not available"
+      - - "Being a theoretical study, no experimental data is associated with this work"
+        - "This is a purely theoretical study"
+    explicit_decision_rules: 
+      inclusion: >
+        A data availability section is included in this category when the content states that no data is associated, was used, 
+        generated or analyzed in the study described in the manuscript.
+      exclusion: >
+        A data availability section is excluded from this category when the content states that there is data associated with this study
+        regardless of the access mode (openly available, partially available, available upon request or not available).
+      exclusion_criteria:
+        - The section mentions there is data associated with the manuscript/study/paper
+        - The section mentions there is data associated with the manuscript/study/paper openly available
+        - The section mentions there is data associated with the manuscript/study/paper partially available
+        - The section mentions there is data associated with the manuscript/study/paper available upon request
+        - The section mentions there is data associated with the manuscript/study/paper which is not openly available 
+    ambiguous_cases_notes: 
+      - >
+       Sections that mention that the manuscript/study/paper has no associated code or software should not belong to this category. 
+       This category is exclusively associated to data. Sections mentioning information about availability of code/software belong to the category "incorrect".
+      - >
+       "This manuscript has no associated data or the data will not be deposited" is a specific set phrase used by the Journal of High Energy Physics.
+       The expression is ambiguous at face value. Nonetheless, you should ALWAYS classify statements using this phrase as "no_data".
+      - >
+        The last hard negative pair exemplifies the case where only implying or hinting at the fact that there might be no associated data with the study
+        is not sufficient for a section to be classified as "no_data". The positive statement explicitly states that the work has no experimental data
+        associated with it. Thus, it is classified as "no_data". The negative statement only implies that by saying the work is purely theoretical,
+        but that is not sufficient to classify the section as "no_data". 
+  - category_name: open_access
+    category_description: This category includes data availability statement sections stating that all elements of research data can be accessed openly by anyone.
+    category_exemplars:
+      - "This article has associated data in a data repository"
+      - "This article has data included as electronic supplementary material" 
+      - "Data associated to the plots in this publication are made available on the CERN Document Server in https://cds.cern.ch/record/2932628"
+      - "The datasets, and the Madgraph cards used to generate them, are provided on Zenodo"
+      - "The data used for this manuscript is available in ref. [71]"
+      - >
+       "The public release of data supporting the findings of this article will follow 
+       the CERN Open Data Policy [103]. Inquiries about plots and tables associated with this article
+       can be addressed to atlas.publications@cern.ch." 
+      - "The code and data to reproduce these results is publicly available in [24]." 
+      - "Link to Github repository which contains the analysis code and all of the data extracted from the EXFOR database" 
+      - "All data used from published  material is contained in the article and duly referenced."
+      - "The data we have used is publicly available. Code will be made available upon request." 
+      - >
+       "The pantheon+ dataset utilized in this article will be found at https://pantheonplussh0es.github.io/. It is also available in [88]. 
+       The 𝐻(𝑧) measurements are provided by [99]. Data for the cosmic microwave background (CMB) are obtained from [90] and 
+       the baryon acoustic oscillations (BAO) dataset is availed from [89]."
+      - >
+       "This study is based on simulated  data generated  using standard  HEP software  packages.  All details necessary  to reproduce  the simulations  and 
+       analyses  are provided  within the article."
+      - "The PDF replicas for the JAMpol25 distributions produced in this analysis are available on LHAPDF [127]"
+      - "—Data, including MCMC chains from the fit without the RC applied, have been released in Ref. [68]."
+      - >
+       "The Wolfram Mathematica files included in the Supplemental Material contain the analytical outputs obtained and used in the manuscript. 
+       These files themselves constitute the main set of research data produced in the study. Because they are already provided as 
+       part of the Supplemental Material accompanying the article, we do not maintain a separate dataset suitable for deposition in a public repository"
+      - "Note that the sources for these examples can be found in the public GitHub repository [57]"
+      - >
+       "The numerical values of the measured differential decay rates and their correlation matrices in full precision, as well as the HistFactory likelihood, 
+       are openly available in Ref. [37]"
+      - "The data used in this work belong to their corresponding authors and are available at A. L. Argon et al. ApJ, 659,1040 (2007)."
+      - "The data that support the findings of this article are openly available [18–20], embargo periods may apply."
+    category_hard_positives: # address
+      - - "This article has associated data in a data repository"
+        - >
+         "This study is based on simulated  data generated  using standard  HEP software  packages.  All details necessary  to reproduce  the simulations  and 
+         analyses  are provided  within the article."
+      - - "We used publicly  available  data"
+        - >
+         "The numerical values of the measured differential decay rates and their correlation matrices in full precision, as well as the HistFactory likelihood, 
+         are openly available in Ref. [37]"
+      - - "Differential decay rate values are openly available. Raw correlator data is openly available. The code used to generate the graphs in Fig. 3 is available on GitHub"
+        - "Differential decay rate values are openly available. Raw correlator data is openly available. The code used to generate the graphs in Fig. 3 is not publicly available"
+    category_hard_negatives: # address
+      - - "Data associated to the plots in this publication are made available on the CERN Document Server in https://cds.cern.ch/record/2932628"
+        - >
+         "The data for this manuscript  are not available.  
+         The values in the plots and tables associated to this article are stored in HEPDATA  (https://www.hepdata.net/record/157579/ )."
+      - - "The data that support the findings of this article are openly available"
+        - >
+          "The data that support the findings of this article are openly available [60]. Gen 2 data can be found in Ref. [42]. 
+          Gen 2L ensembles are available on request. Details of the code and data presented can be found in Refs. [60,61]."
+    explicit_decision_rules:
+      inclusion: >
+        A data availability section is included in this study when the content states all research data used in the study is openly available.
+        To be considered openly available, data is said to be available in the manuscript, references, supplementary material, online repositories, etc. 
+        Research data include every type of research output used, analyzed or generated during the study. That includes raw data, graphs, files, notebooks,
+        numerical computations, etc. 
+      exclusion: >
+        A data availability section is excluded from this category when the content states that all or part of the research data is not openly available.
+        A data availability section is excluded from this category when the content exclusively refers to code being openly available.
+      exclusion_criteria:
+        - The section mentions that no data was used or generated in this study
+        - The section mentions that data is not openly available or is available upon request 
+        - The section mentions that part of the research data used, analyzed or generated is not openly available or available upon request
+        - The section exclusively mentions that code is openly available, but not data
+    ambiguous_cases_notes:
+      - > 
+       Sections that mention data AND code being openly available should belong to this category. As long as the section mentions that every element of research data is openly available, it should belong to this category. 
+       This even if the sections also mentions information about code availability. Information about data availability always takes precedence in classification.
+      - > 
+       Sections that mention that at least one element of research data is not openly available should be excluded from this category. Every single element of research data mentioned 
+       must be openly available for a section to be included in this category, except for code.
+      - > 
+       In the last hard positive pair, the two statements only differ as per the accessibility condition of code. As for elements of research data, both sections state that all elements are openly avaiable.
+       Since data takes precedence in the classification task, different access conditions for code do not determine different categorization of the two statements. Code only influence classification if no other element of 
+       research data is mentioned. Therefore, in this case both sections are classified as "open_access".
+      - >
+       The exemplar stating: "The data that support the findings of this article are openly available [18–20], embargo periods may apply." should be classified as part of this categoy. Arguably, the statement is ambiguous
+       and could belong to other categories. Nonetheless, we are willingly deciding that a statement mentioning that data is openly available AND that an embargo period may apply should be classified as part of this category,
+       especially if the embargo period is underspecified. 
+  - category_name: partial_access
+    category_description: This category include data availability statements stating that only part of the elements of research data are openly available to anyone.
+    category_exemplars:
+      - >
+       "The data for this manuscript are not available. The values in the plots and tables associated to this article
+       are stored in HEPDATA (https://www.hepdata.net/record/157579/ )." 
+      - >
+       "Some of the data that support the findings of this article are openly available [35]. 
+       Three-point functions are not publicly available upon publication because it is not technically feasible
+       and/or the cost of preparing, depositing,and hosting the data would be prohibitive within the terms of this research project. 
+       The data are available from the authors upon reasonable request."
+      - "Some of the data that support the findings of this article are openly available [13]"
+      - >
+       "—The data that support the findings of this article are openly available [38]. The repository includes all the data plotted in Figs. 2, 4, and 5. 
+       The large (~250 GB) data file with the full resolution amplitude spectral density of the dark matter search data is available from the authors
+       upon reasonable request."
+      - >
+       "Tabulated results used in the analysis are provided in Supplemental Material. Raw correlator data are not publicly available. 
+       The data are available from the authors upon reasonable request."
+      - >
+       "Some data and code that support the findings of this article are openly available in Venumadhav et al. [57] and [113].
+       Some code and data that support the findings of this article are not publicly available, but are available from the authors upon reasonable request."
+      - >
+       "Some of the data that support the findings of this article are openly available [14,65] . Energy levels for the isospin-0 pi-pi system by HadSpec 
+       are not publicly available because they are owned by a third party and the terms of use prevent public distribution.
+       Results of the analyses are not publicly available. The data are available from the authors upon reasonable request"
+      - >
+       "—Numerical data corresponding to the results presented are available as HEPData [37]. The full Belle II data are not publicly available.
+       The collaboration will consider requests for access to the data that support this article."
+      - >
+       "The data that support the findings of this article are openly available [60]. Gen 2 data can be found in Ref. [42].
+       Gen 2L ensembles are available on request. Details of the code and data presented can be found in Refs. [60,61] "
+      - > 
+       "The DNN model is available from the GitHub repository [60]. The data that support the ﬁndings of this article are not publicly available.
+       The data are available from the authors upon reasonable request"
+    category_hard_positives:
+      - - > 
+         "Tabulated results are provided in supplementary material. The DDN model is available in the GitHub repository. Gen2 data are available upon request. 
+         Three-point function data is openly available. Raw correlator data is publicly available in Zenodo"
+        - "Some of the data that support the findings of this article are openly available"
+      - - >
+         "Some of the data that support the findings of this article are openly available [14,65] . Energy levels for the isospin-0 pi-pi system by HadSpec 
+         are not publicly available because they are owned by a third party and the terms of use prevent public distribution.
+         Results of the analyses are not publicly available. The data are available from the authors upon reasonable request"
+        - >
+         "The Wolfram Mathematica notebooks used for calculations are not publicly available. The full Belle II dataset is not publicly available. 
+         The software packages used to generate the data in fig. 5 are not available. 
+         Numerical data corresponding to the results presented are available in Zenodo [1]"
+    category_hard_negatives:
+      - - >
+         "Gen 3 data is available upon request. Tabular data is available upon request. The baryon acoustic oscillations (BAO) dataset is publicly available."
+        - >
+         "Tabulated results are available upon request. Energy levels for the isospin-0 pi-pi system are available upon request. 
+         The code used in the analysis is openly available in the GitHub repository. The PDF replicas for the JAMpol25 distributions is not available." 
+      - - > 
+         "The Wolfram Mathematica notebooks used for calculations are not publicly available. The full Belle II dataset is not publicly available. 
+         The software packages used to generate the data in fig. 5 are not available. 
+         Numerical data corresponding to the results presented are available in Zenodo [1]"
+        - >
+         "The Wolfram Mathematica notebooks used for calculations are not publicly available. The full Belle II dataset is not publicly available. 
+         The software packages used to generate the data in fig. 5 are openly available. 
+         Numerical data corresponding to the results presented are available upon request"
+    explicit_decision_rules:
+      inclusion: >
+       A data availability section is included in this category if the content states that at least one element of research data is openly available. That includes
+       section stating that "some" data is openly available.
+      exclusion: >
+       A data availability section is excluded from this category if the content states that all elements of research data are openly available,
+       available upon request or not available. 
+      exclusion_criteria: 
+        - The section mentions that all data is openly available
+        - The section mentions that all data is not available
+        - The section mentions that all data is available upon reasonable request
+        - The section mentions that some elements of research data are available upon request and some are not available
+    ambiguous_cases_notes:
+      - >
+        Sections mentioning that every element of research data is not openly available, but code used in the study is openly available, should NOT 
+        belong to this category. This category exclusively refers to cases where at least one element of research data (not code) is openly available. 
+        Information about code/software used to generate data should be considered information about code. 
+        Therefore it should received lower priority than information about data in the classification task. If a section exclusively mentions information about code used
+        to generate data, it should be classified as "incorrect". 
+      - >
+        The "negative" statements in the hard negative examples includes information about code being openly available. Since code/software is the only element of this 
+        studies that is indicated as openly available, these sections should not belong to the "partial_access" category. Information about code avalability should not be considered.
+        It should instead belong to the category "restricted_access" since at least one element of research data is mentioned as being available upon request. 
+      - >
+        The examples provided as hard positives belong to the same category because in both cases, 
+        sections describe at least one element of research data as openly available. 
+        This regardless of the access condition of all other elements of research data listed.
+      - > 
+        Sections that mention that some data is available upon request while some data is not available should NOT belong to this category. 
+        They should instead belong to the category "restricted_access". This is the case of the second example of hard negative pair, 
+        where the only difference between the two statements as for the accessibility coditions of elements of resarch data (not code) is that 
+        the first mentions the last element of resarch data discussed as being "available in Zenodo",whereas the second mention the last element of research data as being "available upon request". 
+  - category_name: restricted_access
+    category_description: This category includes data availability statements stating that data is available from a source upon request
+    category_exemplars:
+      - "Data will be made available on reasonable request."
+      - "Data will be made available on request."
+      - "The data that support the findings of this study are available from the corresponding author upon reasonable request."
+      - "Data are available from the corresponding author on reasonable request."
+      - "Data generated in the current study will be made available on request."
+      - "Data underlying the figures of this paper are available from the authors upon reasonable request."
+      - "Raw data that support the findings of this article are not publicly available. The data are available from the authors upon reasonable request"
+      - >
+       "The data that support the findings of this article are not publicly available upon publication 
+       because it is not technically feasible and/or the cost of preparing, depositing,and hosting the data would be prohibitive
+       within the terms of this research project. The data are available from the authors upon reasonable request"
+      - >
+       "The data that support the ﬁndings of this article are not publicly available because they are owned by a third party
+        and the terms of use prevent public distribution. The data are available from the authors upon reasonable request."
+      - "The data that support the findings of this Letter are not publicly available. The data are available from the authors upon reasonable request"
+      - "Mathematica files computing the residues and resulting constraints from GEC are available from the authors upon request."
+      - "The full Belle II data are not publicly available. The collaboration will consider requests for access to the data that support this article." 
+      - >
+        "The data that support the findings of this article are not publicly available because they contain sensitive personal information.
+        The data are available from the authors upon reasonable request"
+      - "Detailed calculational data are available, upon reasonable request, from the author R. Sahu"
+      - "Plot data is available upon request."
+      - "The data underlying this work are not publicly available. They can be obtained from the authors upon reasonable request"
+    category_hard_positives:
+      - - >
+          "The data that support the ﬁndings of this article are not publicly available because they are owned by a third party
+          and the terms of use prevent public distribution. The data are available from the authors upon reasonable request."
+        - "The data used in this study are available from the authors of the manuscript"
+      - - "Data will be made available on reasonable request."
+        - "The full Belle II dataset can be made available upon contacting the High Energy Accelerator Research Organization"
+    category_hard_negatives:
+      - - "Data will be made available upon reasonable request"
+        - "Data will be made available in a data repository [12]"
+      - - >
+          "The Wolfram Mathematica notebook are available upon reasonable request. The Gen 4 dataset is available from the authors upon reasonable request
+          Three point function data will be made available upon request"
+        - >
+          "Tabulated results are available upon request. Gen 5 data are available upon request. The Hadron Collider data can be made available from the authors
+           upon request. The DNN model is available from the GitHub repository [60]"
+      - - "The data that support the findings of this article are not publicly available. Data can be made available upon reasonable request."
+        - "The data that support the findings of this article are not publicly available."
+    explicit_decision_rules:
+      inclusion: >
+       A data availability statement is included in this category when the content states that at least one element of research data is available from a source upon requesting it,
+       while NOT stating that any of the elements of research data is openly available. 
+      exclusion: >
+       A data availability statement is excluded from this category if it states that at least one element of research data is openly available, all elements of research data are
+       available, or no element of research data is available.
+      exclusion_criteria:
+        - The section mentions that at least one element of research data is openly available
+        - The section mentions that all elements of research data are not available
+        - The section mentions that data is not available while code is available either openly or upon request
+    ambiguous_cases_notes: 
+      - >
+       Sections mentioning that data will be made available in a data repository should not be considered as restricted. Restricted access should apply to cases where data has to be
+       requested from a source like authors, research groups or organizations. 
+      - >
+       If a section states that even a single element of research data is openly available, it should not be included in this category regardless of the number of other elements of 
+       research data that are available upon request. This is imperative, one single element of research data being openly available is a sufficient condition for exclusion in this category. 
+      - >
+       If at least one element of research data is described as available upon request and no other element is described as being openly available, the section should be classified in this category. 
+      - > 
+       As shown by the last hard negative pair, only stating that "data [...] are not publicly available" is not sufficient to classify a section as "restricted_access". The section must also state
+       that data could be obtained by requesting it. A section only stating that data is not publicly available should instead be classified as "no_access".
+  - category_name: no_access
+    category_description: This category includes data availability statements stating that data cannot be made available under any circumstances.
+    category_exemplars:
+      - "The data that has been used is conﬁdential."
+      - "The data used in this study cannot be made available"
+      - "The data used in this study cannot be made public"
+      - "Energy levels for the isospin-0 pi-pi system by HadSpec are not publicly available because they are owned by a third party and the terms of use prevent public distribution."
+      - "The data used in this study have not been deposited"
+    category_hard_positives:
+      - - "The data that has been used is conﬁdential."
+        - "Raw correlator data cannot be made available due to the terms of use preventing public distribution" # stress that concept is distribution IN GENERAL
+      - - "The data used in this study have not been deposited"
+        - "The data analyzed in this manuscript cannot be made available because they include personal data"
+    category_hard_negatives:
+      - - "Energy levels for the isospin-0 pi-pi system by HadSpec are not publicly available because they are owned by a third party and the terms of use prevent public distribution."
+        - > 
+         "Energy levels for the isospin-0 pi-pi system by HadSpec are not publicly available 
+         because they are owned by a third party and the terms of use prevent public distribution. Results of the analyses are not publicly available.
+         Some data are available from the authors upon reasonable request" 
+      - - "The data that has been used is confidential and it has not been deposited in an online repository"
+        - >
+         "The data that has been used is confidential and it has not been deposited in an online repository.
+         Results of the analysis of data used can be made available upon reasonable request"
+    explicit_decision_rules:
+      inclusion: >
+       A data availability statement is included in this category when the content implies that data used, analyzed or generated in the study is not accessible under any circumstances.
+       This criterion for inclusion is independent of a reason being specified for lack of accessibility and if specified, of the reason itself.
+      exclusion: >
+       A data availability statement is excluded from this category if it states that data can be accessed, regardless of the accessibility conditions.
+       This includes cases where all data can be accessed publicly, only part of data can be accessed publicly, all data can be accessed but under specific circumstances (e.g. upon request)
+       or some data can be accessed under specific circumstances. As long as at least one element of research data can be accessed under some condition, data availability statements 
+       should be excluded from this category. 
+      exclusion_criteria:
+        - The section mentions that all or part of the data is publicly available
+        - The section mentions that all or part of the data is available under specific conditions (e.g. upon request)
+        - The section mentions that code cannot be made available, not data. 
+    ambiguous_cases_notes:
+      - Sections that mention that all elements of research data are not available except for one should not be included in this category.
+        One single element of research data being available under some condition suffice to exclude a section from this category.
+      - >
+        The reason why data cannot be made accessible is irrelevant for classification into this category. Different sections might specify different reasons 
+        (e.g. confidentiality, terms of use, no reason) why data cannot be made accessible under any circumstances. As long as the content of a section states or implies that data is not accessible,
+        the section should be classified as part of this category. 
+  - category_name: incorrect # handle case where info about data is in the author's comment --> ASK MT
+    category_description: This category includes data availability statements stating information not pertaining to data availability.
+    category_exemplars: 
+      - "The code is available at the GitHub repository link provided in the manuscript. 2https://github.com/salnikov-dmitry/lsw"
+      - "This manuscript has no associated code/software."
+      - "The code used to generate tabular data in this study is openly available"
+      - "The Python code to generate the data can be obtained as an ancillary file from [68]"
+      - "This article is distributed under the terms of the Creative Commons Attribution License (CC-BY4.0), which permits any use, distribution and reproduction in any medium,
+        provided the original author(s) and source are credited"
+      - "The author declares that there are no conflicts of interest"
+      - "This work was supported by Basic Science Research Program through the National Research Foundation of Korea (NRF) funded by the Ministry of Education, Science and Technology"
+      - >
+       "Although we have used numerical computations, it is easy to reproduce our data using the code in Appendix B. 
+       This file can be downloaded from the following website: https://www2.yukawa.kyoto-u.ac.jp/∼takeshi.morita/."
+      - "The Mathematica notebooks used for the calculations in this paper are available at [28]."
+    category_hard_positives:
+      - - "The code is available at the GitHub repository link provided in the manuscript. 2https://github.com/salnikov-dmitry/lsw"
+        - "This article is distributed under the terms of the Creative Commons Attribution License (CC-BY4.0), which permits any use, distribution and reproduction in any medium,
+          provided the original author(s) and source are credited"
+    category_hard_negatives: 
+      - - "This manuscript has no associated code/software."
+        - "Not applicable"
+      - - "This manuscript has no associated code/software."
+        - "The graphs in Figs. 1 and 2 were plotted from equations appearing in this paper and in reference [5], as detailed in the figure captions"
+      - - "The author declares that there are no conflicts of interest"
+        - "The values in the plots and tables associated to this article are stored in Zenodo"
+      - - "The code associated with this manuscript is openly available"
+        - "The code used to generate data in this study is openly available. Raw analysis data can be made available upon request."
+    explicit_decision_rules:
+      inclusion: >
+        A data availability statement is included in this category when it contains information not pertaining to data availability. 
+        For instance, statements talking about code are included in this category if they exclusively state information about code. 
+        Statements mentioning information about an article's general accessibility conditions (e.g. license associated to the article) are also included in this category. 
+      exclusion: A data availability statement is excluded from this category when the content mentions any information about availability of an element of research data. 
+        That includes any element that might be considered as part of research data except for code (e.g. numerical values, measurements, tables, figures, images, etc.). 
+      exclusion_criteria:
+        - The section mentions any information about availability of any element of research data.
+    ambiguous_cases_notes:
+      - >
+       Sections that only mention information about code/software used to generate data should be considered sections about code. Therefore, they should be classified as part of this category. 
+      - >
+       Sections that mention information that might refer to data availability (e.g. "Not applicable") should not belong to this category, 
+       but should rather be classified as part of the category "unclear".
+      - > 
+       Sections that mention contradictory information about data availability (e.g. stating both that a study has no associated data AND that data can be made available)
+       should not belong to this category, but should rather be classified as part of the category "unclear".
+      - >
+       Sections that mention any information about data availability are excluded from this category. This also includes sections that additionally mention information
+       about code availability.
+      - >
+       In the third example of hard negatives, given the second sentence also mention information about data availability, that should take precedence. 
+       Therefore, even if the section mentions information about code availability, it should not be classified as "incorrect". 
+       Information about data availability should guide classification and the section should therefore be classified as "restricted_access"
+      - >
+       Examplar number 8 mentions information about the files containing the code to reproduce the data. The subject of the section are files containing code,
+       therefore the section should be classified as "incorrect".
+      - >
+       Exemplar number 9 mentions "Mathematica" files. Those are to be considered as code and therefore the section should be classified as "Incorrect". The same reasoning applies to sections mentioning Mathematica "notebooks". 
+  - category_name: unclear # handle the case for CMS data preservation, reuse and open access policy.
+    category_description: This category includes data availability statements stating ambiguous or unclear information about data availability.
+    category_exemplars:
+      - "Not applicable."
+      - "This paper is a pure theoretical study, and no associated code/software is involved."
+      - "All relevant data generated or analyzed during this study have been included in the article. Data availability No data was used for the research described in the article."
+      - "Data cannot be made available for reasons disclosed in the data availability statement."
+      - >
+        "The data samples (HepMC and EventCalc-SHiP) generated during this study are available from the corresponding author on reasonable request: HepMC samples (M. Bahmani), 
+        EventCalc-SHiP samples (A. Reghunath). My manuscript has no associated data."
+    category_hard_positives:
+      - - "Data cannot be made available for reasons disclosed in the data availability statement."
+        - "This paper is a pure theoretical study, and no associated code/software is involved."
+      - - "This study is purely theoretical"
+        - "All relevant data generated or analyzed during this study have been included in the article. Data availability No data was used for the research described in the article."
+    category_hard_negatives:
+      - - "Raw correlator data can be made available upon request. My study has no associated data"
+        - "Code for analysis can be made available upon request. My study has no associated code"
+      - - "This is a purely theoretical study"
+        - "This is a purely theoretical study. Therefore, the study has no associated data"
+      - - "The data that support the findings of this study are openly available. My study has no associated data"
+        - "The data that support the findings of this article are openly available [18–20], embargo periods may apply."
+    explicit_decision_rules:
+      inclusion: >
+        A data availability statement is included in this category when the content either states ambiguous/contradictory information about data availability or
+        when the content implies information about data availability (e.g. "This is a purely theoretical study").
+      exclusion: >
+        A data availability statement is excluded from this category when the content states information about data availability that clearly indicates the
+        condition of accessibility of the elements of research data involved.
+      exclusion_criteria:
+        - Section mentions information about data availability that does not logically contradict information stated previously.
+        - Section mentions information not pertaining to data availability.
+    ambiguous_cases_notes:
+      - >
+        Sections that initially include information that only implies information about data availability, but later clarify data availability/access conditions
+        should not go into this category. Those sections should go into the category consistent with the clarified data availability condition. For instance,
+        a section stating that a study is purely theoretical and therefore has no associated data should go in the "no_data" category.
+      - >
+        Sections that exclusively mention ambiguous/contradictory information about code should not belong to this category, but should instead be classified
+        under the category "incorrect"
+      - > 
+        Sections that contain information about data availability that is apparently nonsensical or circular 
+        (e.g. "Data cannot be made available for reasons disclosed in the data availability statement") should belong to this category. 
+      - >
+        The last hard negative pair showcases an example where the special statement "The data that support the findings of this article are openly available [18–20], embargo periods may apply."
+        occurs. This statement is arguably ambiguous, but it should nonetheless be classified as "open_access". 

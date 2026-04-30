@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medialab-internship"
+version = "0.1.0"
+description = "A project for processing scientific papers in the domain of high-energy physics, check and classify data availability and code availability statements."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Jacopo Zuppa", email = "j.zuppa97@gmail.com" }]
+license = { text = "MIT" }
+dependencies = [
+    "pymupdf",
+    "sentence-transformers",
+    "tqdm",
+    "regex",
+    "pandas",
+    "numpy",
+    "requests",
+    "httpx",
+    "matplotlib",
+    "pyyaml",
+    "pyspellchecker",
+    "wordninja",
+    "anthropic",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+[tool.ruff.lint]
+select = ["ANN001", "I", "UP", "F"]
+fixable = ["ALL"]
+ignore = ["E501"]

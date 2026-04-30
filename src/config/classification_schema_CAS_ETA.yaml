@@ -1,0 +1,257 @@
+categories:
+  - category_name: no_tool
+    category_description: This category includes code availability statements that do not mention any External Software Tool.
+    category_exemplars:
+      - "this article has code included as electronic supplementary material."
+      - > 
+        "my manuscript has associated code/ software in a data repository. [author’s comment: the code/software used for this study is openly accessible under the licenses apache 2.
+        https://gitlab.cern.ch/lhcb/allen https://gitlab.cern.ch/lhcb/allen and gpl version 3 https://gitlab.cern. ch/lhc b/rec.]."
+      - "this article has associated code in a code repository."
+      - "the code for this paper can be found at https://github.com/viniciusmikuni/omnilearn while the data generated to train the model is available at https://zenodo.org/records/14027110."
+      - "this manuscript has no associated code/software. [authors’ comment: the code used in this project is publicly available at the following repository: https://github.com/opengpd/gpddatabase (see ref. [78])."
+      - "this manuscript has no associated code/software. [authors’ comment: this study does not involve computational analysis, modeling, or simulation, so no custom code or software was generated or utilized.]."
+      - >
+        "this manuscript has no associated code/software. [authors’ comment: code/software sharing for this article is not applicable because no software and codes were generated during the process. 
+        for colleagues who want to perform the same calculations, following the theoretical explanations which are provided throughout the text will be sufficient.]."
+      - "this manuscript has no associated code/software. [author’s comment: no specific softwares are used. anyone can reproduce the graphs with the equations mentioned in the research paper.]."
+      - >
+        "this manuscript has associated code/software in a data repository. 
+        [authors’ comment: the code/software generated during and/or analysed during the current study is available in the repository: https://github.com/bfuks/dmsimpt. Software configuration cards can be obtained upon request.]."
+      - "code/software will be made available on reasonable request. [authors’ comment: the code is also available on github at https://github.com/croi900/genesys.]." 
+      - "code/software will be made available on reasonable request. [author’s comment: the code/software generated during and/or analysed during the current study is available from the corresponding author on reasonable request.]."
+      - "this manuscript has no associated code/software.[authors’comment: all code analysed in this manuscript are available from the corresponding author on reasonable request.]." 
+      - "response code/software will be made available on reasonable request. [authors’ comment: all the formulas needed to reproduce the results are written explicitly on the manuscript.]."
+      - "this article has associated code in a code repository. The code to reproduce the figures of this article will be shared upon request." 
+      - >
+        "My manuscript has no associated code/software. [author’s comment: code/software sharing for this article is not applicable because no software was generated during the process and codes used by authors were not written for publication purposes. 
+        For colleagues who want to perform the same calculations, following the theoretical explanations which are provided throughout the text will be sufficient.]."
+      - >
+        "code/software cannot be made available for reasons disclosed in the code availability statement. [authors’ comment: the code/software developed for this study is not publicly available in order to protect intellectual property and avoid unintended reuse or misinterpretation. 
+        However, the corresponding author is happy to provide methodological guidance or relevant implementation details upon reasonable request via email, especially for academic and noncommercial research purposes.]."
+      - >
+        "Code/software cannot be made available for reasons disclosed in the code availability statement. 
+        [authors’ comment: the code utilized in the current study is not publicly available because co-owned by other authors, but details can be shared by the corresponding author on reasonable request.]."
+    category_hard_positives:
+      - - "This article has no associated code or the code will not be deposited."
+        - "the code for this project is available at ref. [29]."      
+      - - >
+          "this manuscript has no associated code/software. [authors’ comment: code/software sharing for this article is not applicable because no software and codes were generated during the process. 
+          for colleagues who want to perform the same calculations, following the theoretical explanations which are provided throughout the text will be sufficient.]."
+        - "this manuscript has no associated code/software. [authors’ comment: the code used in this project is publicly available at the following repository: https://github.com/opengpd/gpddatabase (see ref. [78])."
+    category_hard_negatives:
+      - - "this manuscript has no associated code/software. [author’s comment: no specific softwares are used. Anyone can reproduce the graphs with the equations mentioned in the research paper.]."
+        - "this manuscript has no associated code/software.[authors’comment: the event generators used are freely available. we refer the reader to the bibliography.]."
+      - - "code/software will be made available on reasonable request. [author’s comment: the pdf transformation code used for this publication is available from the corresponding author on request.]."
+        - "code/software will be made available on reasonable request. [authors’ comment: the maple code used to verify that the solutions satisfy the equations of motion in kalu za–klein theory is available upon reasonable request.]."
+      - - "this manuscript has associated code/ software in a data repository. [authors’ comment: the code and software presented in the current study are available in the pierre auger observatory’s zenodo repository. https://doi.org/10.5281/zenodo. 4487612]."
+        - "this manuscript has no associated code/ software. [author’s comment: the code for this work is written in python and handles. It is available in source format from the corresponding author upon reasonable request for colleagues needing it for similar analyses.]." 
+    explicit_decision_rules:
+      inclusion: >
+        A code availability statement is included in this category if no External Software Tool is mentioned in the section. 
+        Sections that do not mention any Author-Produced Software Artifact are NOT included in the section UNLESS they also do not mention any EST being used in the study.
+      exclusion: >
+        A code availability statement is excluded from this category if AT LEAST ONE External Software Tool is mentioned, regardless of access conditions.
+        Sections are NOT excluded from this category if they mention at least one Author-Produced Software Artifact UNLESS they also do not mention any EST being used in the study. 
+    ambiguous_cases_notes:
+      - >
+        In a vast majority of exemplars provided, the only element of code/software mentioned is an Author-Produced Software Artifact (e.g. "code included [...]", "code used in this project", "code/software generated [...] during the current study"). 
+        Given that in all of these, no ESTs are mentioned, the sections are classified as "no_tool"
+      - >
+        All negative cases of the first, second and third hard negative pairs mention ESTs (i.e. "event generators", "python") or imply EST usage (e.g. "the *maple* code used").
+        Therefore, none of these sections is classified as "no_tool" along the "external_tool_availability" dimension.
+  - category_name: open_tool
+    category_description: This category includes code availability statements stating that only open, free-to-use External Software Tools were used. 
+    category_exemplars:
+      - >
+        "my manuscript has no associated code/ software. [author’s comment: code/software sharing not applicable to this article as no code/software was generated during the current study.
+          The numerical analysis was performed using the public open source software flavio.]."
+      - "This manuscript has no associated code/software. [authors’ comment: the differential equations in this article can be solved by using the opensource software package feni csx in python.]."
+      - "code/software will be made available on reasonable request. [authors’ comment: most of the code used in this paper comes from the open source software packages cited in the paper, and the remainder is shared at https://gitee.com/nbalexis/quantumlab.git.]." 
+      - > 
+         "This manuscript has associated code/software in a data repository. 
+         [author’s comment: the software for detector simulation and event reconstruction is publicly available on https://github.com/muoncollidersoft. 
+         Event generation is performed by using open source programs as described in the text, configuration files can be provided upon request. 
+         Final data analysis is performed with the root open source software, macros can be provided upon reasonable request.]."
+      - "code/software will be made available on reasonable request. [author’s comment: the simulation code is based on the milc collaboration’s code, publicly available at https://github.com/milcqcd/.]"
+      - "code/software will be made available on reasonable request. [author’s comment: the current study uses publicly available software relevant to high energy physics, and the analysis code is available from the corresponding author on reasonable request.]."
+      - "code/software will be made available on reasonable request. [author’s comment: the software used for event generation and analysis is fully open source. Parameter settings can be made available upon reasonable request.]." 
+      - > 
+        "code/software will be made available on reasonable request. authors’ comment: a large fraction of the software used in the experiment is publicly available at the repository https://doi.org/10.5281/zenodo.5574115 
+        Specific software that was utilized to obtain the results shown in this paper can be made available upon request.]"
+      - "code/software will be made available on reasonable request. [authors’ comment: results were obtained using a publicly available code [41].]."
+      - >
+        "code/software will be made available on reasonable request. [author’s comment: all data included in this manuscript were generated using the iebe music code, which is publicly accessible on github. 
+        the code analysed during the current study is available from the authors on reasonable request.]."
+      - "my manuscript has no associated code/ software. [authors’ comment: the PDF2ISR code will be implemented as a plugin to Pythia8, and can, in the meanwhile, be obtained upon request from the authors.]."
+      - > 
+        "This manuscript has no associated code/software. [authors’ comment: atlas collaboration software is open source, and all code necessary to recreate an analysis is publicly available. 
+        The athena (http://gitlab.cern.ch/atlas/athena) software repository provides all code needed for calibration and uncertainty application, with configuration files that are also publicly available via docker containers and cv mfs. 
+        The specific code and configurations written in support of this analysis are not public; however, these are internally preserved.]."
+      - "my manuscript has associated code/ software in a data repository. [author’s comment: the code used to generate results in this article will be made available in the next release of the pythia 8.3 code [https://pythia.org/]."
+    category_hard_positives:
+      - - >
+          "This manuscript has no associated code/software. [authors’ comment: we utilized publicly available codes in this study. 
+          While we developed additional code to efficiently interface with these public codes, we believe that this auxiliary code does not provide significant standalone value to warrant publication or public sharing.]."
+        - "my manuscript has associated code/ software in a data repository. [author’s comment: the code used to generate results in this article will be made available in the next release of the pythia 8.3 code [https://pythia.org/]."
+      - - "this manuscript has no associated code/software. [author’s comment: in this work, we utilized the publicly available software packages cobaya, getdist, mc evidence, and the camb code. the relevant references are provided in sect. 2.2 and sect. 3. no other code/software was generated or analysed during this work.]."
+        - "This work takes advantage of codes that are already publicly available. Nonetheless, our code will be made available on reasonable request."
+    category_hard_negatives: 
+      - - "This manuscript has no associated code/software [author's comment: we employed cobaya and python for numerical computations and graphical analyses presented in this study]" 
+        - "this manuscript has no associated code/ software. [authors’ comment: we employed mathematica and python for the numerical computations and graphical analyses presented in this study. no additional code or software was developed or utilised during the course of this research.]."
+      - - > 
+           "This manuscript has associated code/software in a data repository. 
+           [author’s comment: the software for detector simulation and event reconstruction is publicly available on https://github.com/muoncollidersoft. 
+           Event generation is performed by using open source programs as described in the text, configuration files can be provided upon request. 
+           Final data analysis is performed with the root open source software, macros can be provided upon reasonable request.]."
+        - "this article has associated code in a code repository. The data on which this paper is based may be reproduced using the code and scripts found on github at https://github.com/zgmou/sewedthimble."
+      - - >
+          "This manuscript has no associated code/software. [authors’ comment: we utilized publicly available codes in this study. 
+          While we developed additional code to efficiently interface with these public codes, we believe that this auxiliary code does not provide significant standalone value to warrant publication or public sharing.]."
+        - "this manuscript has no associated code/software. [authors’ comment: the code used in this project is publicly available at the following repository: https://github.com/opengpd/gpddatabase (see ref. [78])."
+    explicit_decision_rules:
+      inclusion: >
+        A code availability statement is included in this category if ALL identifiable External Software Tools are publicly available software tools. 
+        Sections that do not mention any identifiable ETS are NOT categorized as part of this category and are instead classified as "no_tool".  
+        Remember that access conditions of Author-Produced Software Artifacts are IRRELEVANT for classification along the dimension "external_tool_availability".
+      exclusion: >
+        A code availability statement is excluded from this category when AT LEAST ONE identifiable External Software Tool is NOT a publicly available software tool OR
+        when there are NO identifiable ETSs mentioned in the statement. 
+    ambiguous_cases_notes:
+      - >
+        The statement "code/software will be made available on reasonable request. authors’ comment: a large fraction of the software used in the experiment is publicly available at the repository https://doi.org/10.5281/zenodo.5574115 
+        Specific software that was utilized to obtain the results shown in this paper can be made available upon request.]" mentions the External Software Tool "large fraction of the software used in the experiment". This element of software is characterized as an EST due to the generic phrasing and the absence of authorship/provision signals.
+        Since this is the only identifiable EST and it is described as publicly available, the section is classified as "open_tool".
+      - >
+        In the statement "This manuscript has no associated code/software. [authors’ comment: atlas collaboration software is open source, and all code necessary to recreate an analysis is publicly available. 
+        The athena (http://gitlab.cern.ch/atlas/athena) software repository provides all code needed for calibration and uncertainty application, with configuration files that are also publicly available via docker containers and cv mfs. 
+        The specific code and configurations written in support of this analysis are not public; however, these are internally preserved.]." the only element of software that's described as "internally preserved" is an Author-Produced Software Artifact. All other identifiable elements of software are External Software Tools. These are all described as publicly available.
+        Therefore, the section is classified as "open_tool".
+      - >
+        The negative example of the first hard negative case mentions two ESTs. One of the ESTs mentioned is NOT publicly available (i.e. "mathematica"). Therefore, the section is NOT classified as "open_tool"
+      - >
+        The positive example mentions a variety of ESTs openly available (i.e. "software for detector simulation", "open source programs", "root open source program"), while only describing Author-Produced Software Artifacts (i.e. "configuration files", "macros") as available upon request.
+        Since all identifiable ESTs are described as publicly available, the section is classified as "open_tool"
+  - category_name: mixed_tool
+    category_description: This category includes code availability statements that mention a combination of publicly available tools, proprietary tools or tools whose access conditions are unknown.
+    category_exemplars:
+      - >
+        "this manuscript has no associated code/ software. 
+        [authors’ comment: we employed mathematica and python for the numerical computations and graphical analyses presented in this study. no additional code or software was developed or utilised during the course of this research.]."
+      - "this manuscript has no associated code/ software. [author's comment: we employed python and maple for numerical analysis]"
+      - "this manuscript has associated software in a code repository. [author's comment: our code can be found on Github [10]. We employed mathematica and open source software flavio for numerical analysis]"
+      - "code/software will be made available upon request: [author's comment: we employed maple for numerical analysis and data included in this manuscript were generated using the iebe music code]"
+    category_hard_positives:
+      - - "this manuscript has no associated code/software [author's comment: we employed maple and python for numerical computations]"
+        - "code/software will be made available upon request [author's comment: we used mathematica for numerical analysis. We also utilized publicly available software package GetDist]"
+    category_hard_negatives:
+      - - "this manuscript has no associated code/software [author's comment: Maple software and Cobaya were used for numerical analysis in this manuscript]"
+        - "this manuscript has no associated code/software. [author’s comment: in this work, we utilized the publicly available software packages cobaya, getdist, mc evidence, and the camb code. the relevant references are provided in sect. 2.2 and sect. 3. no other code/software was generated or analysed during this work.]."
+      - - "this manuscript has associated software in a code repository. [author's comment: our code can be found on Github [10]. We employed mathematica and open source software FeynCalc for numerical analysis]"
+        - "this manuscript has associated software in a code repository. [author's comment: Wolfram Mathematica and Maple code scripts were used for the analysis in this manuscript]"
+    explicit_decision_rules: 
+      inclusion: >
+        A code availability statement is included in this category when at least two External Software Tools mentioned in the section have DIFFERENT access conditions. 
+        Therefore, a statement is classified as "mixed_tool" along the "external_tool_availability" dimension if:
+          - it mentions one or more PUBLICLY AVAILABLE tool and one or more PROPRIETARY tool;
+          - it mentions one or more PUBLICLY AVAILABLE tool and one or more UNKNOWN tool;
+          - it mentions one or more PROPRIETARY tool and one or more UNKNOWN tool;
+          - it mentions one or more PUBLICLY AVAILABLE, one or more PROPRIETARY, and one or more UNKNOWN tools;
+      exclusion: >
+        A code availability statement is excluded from this category when ALL External Software Tools mentioned have EQUAL access conditions. 
+        That is, a statement is excluded when all ETSs are PUBLICLY AVAILABLE, all are PROPRIETARY, or all are UNKNOWN.
+    ambiguous_cases_notes: 
+      - >
+        The positive examples of the first and second hard negative pairs both mention a mix of publicly available and proprietary tools. 
+        On the other hand, the negative example of the first pair mentions three publicly available tools, while the negative example of the second pair mentions two proprietary tools.
+        Since in the negative example, all mentioned ETSs have the same access conditions, they are NOT classified as "mixed_tool" under the "external_tool_availability" dimension
+  - category_name: proprietary_tool
+    category_description: This category includes code availability statements stating that only third-party, proprietary External Software Tools were used.
+    category_exemplars: 
+      - >
+        "the manuscript has no associated code/software. [author’s comment: in the current study, we have not generated any software/code. 
+        For plotting purpose, we have used mathematica software. the code of all figures are available from the corresponding author on reasonable request.]."
+      - "code/software will be made available on reasonable request. [author’s comment: maple is used for calculation. no specific code is generated.]."
+      - >
+        "code/software will be made available on reasonable request. 
+        [author’s comment: in certain sections of the numerical analysis, mathematica was employed using its built in functions; the corresponding code is available from the corresponding author upon reasonable request.]."
+      - "code/software will be made available on reasonable request. [authors’ comment: the maple code used to verify that the solutions satisfy the equations of motion in kalu za–klein theory is available upon reasonable request.]."
+      - >
+        "code/software will be made available on reasonable request. 
+        [authors’ comment: this study used matlab for numerical computations. The matlab code developed during the current study is available from the corresponding author on reasonable request.]."
+      - "the manuscript has no associated code/software. [author’s comment: all the figures are generated by the mathematica program, which can be requested from the authors.]."
+      - "this manuscript has no associated code/software. [author’s comment: we used mathematica software for most computations. however, this software is not free.]."
+      - "the manuscript has no associated code/software. [author’s comment: all the figures are generated by the mathematica program, which can be requested from the authors.]."
+      - "this manuscript has no associated code/software. [author’s comment: all calculations were performed analytically. some results were verified using maple symbolic computation software.]."
+      - >
+        "My manuscript has associated code/software in a data repository. 
+        [author’s comment: all analytical computations reported in this manuscript have been rechecked in the computer algebra system maple.
+        Two maple sheets corresponding to the extreme and non extreme cases can be found in supplementary materials and in the repository below. 
+        The discretization of differential operators (23)–(25) and (41)–(43) using the tchebyshev type spectral method is equally performed in maple computer algebra system. 
+        Finally, the numerical solution of the resulting quadratic eigenvalue problem (48) is performed in matlab software using the polyeig function. 
+        All these materials are freely accessible at the following repository https://github.com/dutykh/ellisbronnikov/.]."
+      - >
+        "code/software will be made available on reasonable request. [author’s comment: we use mathematica and mathcha software for numerical computation and graphical analysis of this problem. 
+        No other code/software was generated or analysed during the current study.]."
+    category_hard_positives: 
+      - - "code/software will be made available on reasonable request. [author’s comment: maple is used for calculation. No specific code is generated.]."
+        - >
+          "This manuscript has associated code/software. [authors’ comment: the code used for the event generation, the network architecture and its training can be found at
+          https://github.com/amorandini/param_hunt. An example jupyter notebook which explains how to derive the plots and results in this paper is also provided. Wolfram Mathematica was used for some calculations in the paper]."
+      - - >
+          "code/software will be made available on reasonable request. 
+          [authors’ comment: this study used matlab for numerical computations. The matlab code developed during the current study is available from the corresponding author on reasonable request.]."
+        - "the code used to perform the mc simulations in this paper will soon be made publicly available in a dedicated folder of the powheg box res gitlab repository: 
+          https://gitlab.com/powheg-box/res/user-processes/vv_pol the relevant input parameters for simulating polarized boson events within the sm and smeft frameworks, using the new powheg boxres implementation, are listed in [10].
+          Maple software was used for numerical computations."
+    category_hard_negatives:
+      - - "code/software will be made available on reasonable request. [author’s comment: data for the plots were generated with wolfram mathematica.]."
+        - "code/software will be made available on reasonable request. [author's comment: Python scripts were used for numerical computations]"
+      - - "my manuscript has no associated code/ software. [authors’ comment: this is a theoretical work, and no new code/software has been generated. the numerical computation has been performed using mathematica.]."
+        - "my manuscript has no associated code/ software. [authors’ comment: this is a theoretical work, and no new code/software has been generated. the numerical computation has been performed using mathematica and python.]."
+      - - "this manuscript has no associated code/software. [author’s comment: all calculations were performed analytically. some results were verified using maple symbolic computation software.]."
+        - "this manuscript has no associated code/software. [we used a computation software for numerical analysis in this manuscript]"
+    explicit_decision_rules:
+      inclusion: >
+        A code availability statement is included in this category if ALL identifiable External Software Tools are third-party, proprietary software tools.   
+        Remember that access conditions of Author-Produced Software Artifacts are IRRELEVANT for classification along the dimension "external_tool_availability".
+      exclusion: >
+        A code availability statement is excluded from this category when AT LEAST ONE identifiable External Software Tool is NOT a third-party, proprietary software tool. 
+        That is, when at least one ETS is an open, publicly available tool or its access conditions are UNKNOWN. 
+    ambiguous_cases_notes:
+      - >
+        The second statement of the first hard positive pair is included in the "proprietary_tool" category because the only External Software Tool mentioned (i.e. "Wolfram Mathematica") is a proprietary tool. 
+        All other elements of code/software mentioned are Author-Produced Software Artifacts. Therefore, their associated access conditions do not count for classification in the "external_tool_availability" dimension. 
+        This is also the case for the second statement of the second hard positive pair. 
+      - > 
+        All negative examples in the first, second and third hard negatives do NOT exclusively mention External Software Tools that are proprietary. Therefore, they are not classified as "proprietary_tool". 
+  - category_name: unknown_status_tool
+    category_description: this category includes code availability statements that only External Software Tools whose access conditions (i.e. open, proprietary) are unknown. 
+    category_exemplars: 
+      - "this manuscript has no associated code/software. [author's comment: we used a computation software for numerical analysis in this manuscript]"
+      - "this manuscript has associated code/software [author's comment: our code can be found at the following repository [14]. Software tools were used for some simulations carried out in the manuscript]"
+    category_hard_positives:
+      - - "code/software will be made available upon request [author's comment: we used a software for event generations]"
+        - "this manuscript has no associated code/software [author's comment: a numerical analysis software was used in this manuscript]"
+    category_hard_negative: 
+      - - "this manuscript has associated code/software [author's comment: we used the software cited in [37] for computations in this manuscript]"
+        - "this manuscript has associated code/software [author's comment: we used Wolfram Mathematica for computations in this manuscript]"
+      - - "code/software will be made available upon request [author's comment: software tools were used numerical computations]"
+        - "code/software will be made available upon request [author's comment: Python scripts were used numerical computations]"
+      - - "this manuscript has no associated code/software [author's comment: a number of softwares were used for generating the data in this manuscript]"
+        - "this manuscript has no associated code/software [author's comment: Python, Mathematica and other softwares were used for generating the data in this manuscript]"
+    explicit_decision_rules:
+      inclusion: >
+        A code availability statement is included in this category if the access conditions of ALL External Software Tools used in the manuscript are UNKNOWN.
+      exclusion: >
+        A code availability statement is excluded from this category if the access conditions of AT LEAST ONE External Software Tool is either PUBLICLY AVAILABLE or PROPRIETARY.
+    ambiguous_cases_notes:
+      - > 
+        Whenever generic terms (e.g. software tools) are used to describe an EST without any specification of their access conditions, the access conditions of those ESTs are to be considered unknown.
+      - >
+        If the access conditions of an EST cannot be reliably inferred from the content of the section, the list provided in the classification prompt, or previous knowledge you have of the access conditions of known ESTs, 
+        the access condition of that EST is to be considered unknown. 
+      - >
+        The negative example of the third hard negative pair mentions two ESTs (i.e. "Python", "Mathematica") whose access conditions are KNOWN (i.e. open and proprietary, respectively).
+        Therefore, even though the section mentions ESTs whose access conditions are unknown (i.e. "other softwares"), it is NOT classified as "unknown_status_tool" under the "external_tool_availability" dimension.
+        
+         

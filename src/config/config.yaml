@@ -1,0 +1,166 @@
+paths:
+  registries: "data/metadata/registries"
+  subregistries: "data/metadata/registries/output_subregistries"
+  records: "data/records/software_version"
+
+
+start_headers_DAS:
+  - "(?m)^\\s*Data\\s+[Aa]vailability\\s*(?:[Ss]tatement)?(?![ \\t]*\\.[ \\t]*\\.)\\.?"
+  - "(?m)^\\s*D\\s*a\\s*t\\s*a\\s*[Aa]\\s*v\\s*a\\s*i\\s*l\\s*a\\s*b\\s*i\\s*l\\s*i\\s*t\\s*y\\s*(?:[Ss]\\s*t\\s*a\\s*t\\s*e\\s*m\\s*e\\s*n\\s*t)?"
+  - "DATA\\s+AVAILABILITY"
+  - "D\\s*A\\s*T\\s*A\\s+A\\s*V\\s*A\\s*I\\s*L\\s*A\\s*B\\s*I\\s*L\\s*I\\s*T\\s*Y"
+  - "DATA\\s+AVAILIBILITY"
+  - "D\\s*A\\s*T\\s*A\\s+A\\s*V\\s*A\\s*I\\s*L\\s*I\\s*B\\s*I\\s*L\\s*I\\s*T\\s*Y"
+  - "[Dd]ata\\s+[Aa]vailibility\\s*(?:[Ss]tatement)?\\.?"
+  - "[Dd]a\\s*t\\s*a\\s*[Aa]\\s*v\\s*a\\s*i\\s*l\\s*i\\s*b\\s*i\\s*l\\s*i\\s*t\\s*y\\s*(?:[Ss]\\s*t\\s*a\\s*t\\s*e\\s*m\\s*e\\s*n\\s*t)?"
+  - "(?m)^\\s*Availability\\s*[Oo]f\\s*[Dd]ata\\s*[Aa]nd\\s*[Mm]aterial"
+
+end_headers_DAS:
+  - "(?m)^[ \\t]*[Cc]ode\\s*[Aa]\\s*vailability(?:\\s*[Ss]tatement)?\\.?"
+  - "(?m)^[ \\t]*[Dd]isclosure\\.?"
+  - "(?m)^[ \\t]*[Cc]onflicts\\s+[Oo]f\\s+[Ii]nterest\\.?"
+  - "(?m)^[ \\t]*[Aa]ppendix:?"
+  - "(?m)^[ \\t]*[Dd]eclarations"
+  - "(?m)^[ \\t]*[Aa]bbreviations"
+  - "(?m)^[ \\t]*[Dd]eclaration\\s*[Oo]f\\s*[Ii]nterests\\.?"
+  - "(?m)^[ \\t]*Open\\s+[Aa]ccess"
+  - "(?m)^[ \\t]*[Mm]aterial\\s*[Aa]vailability\\s*(?:[Ss]tatement)?\\.?"
+  - "(?m)^[ \\t]*[Dd]eclaration\\s*[Oo]f\\s*[Cc]ompeting\\s*[Ii]nterests?\\.?"
+  - "(?m)^[ \\t]*[Ff]unding\\.?"
+  - "(?m)^[ \\t]*[Aa]cknowledgements\\.?"
+  - "(?m)^[ \\t]*[Rr]eferences\\.?"
+  - "(?m)^[ \\t]*[Aa]uthor\\s*[Ss]tatement"
+  - "(?m)^[ \\t]*\\[[0-9]+\\]\\s*" # newline + 0+ whitespaces + "[" + digit + "]" 
+  - "SPIN"
+  - "(?:\\.|\\n)TABLE\\s+[IVX0-9]+(?:\\s*[:.—-])?" # GROUP: literal dot OR linebreak + "TABLE" + 1+ whitespaces + 1+ [I,V,X, 1 digit] + GROUP (optional): 0+ whitespaces + [:, ., —, -] e.g. "TABLE I -"
+  - "(?:\\.|\\n)PHYSICAL"
+  - "(?!.K.)\\.[A-Z]+\\." # (-)lookahead + literal dot + 1+ capitalized + literal dot e.g. ".FIG."
+  - "[0-9]We"
+  - "\\.\\s*(?!\\s*D\\s\\d{1,4})(?:[A-Z]{2}(?:-?[A-Z]+)?\\s*){1,2},?" # (-)lookahead + literal dot + 0+ whitespaces + 1-2*GROUP: 1+ capitalized + dash (optional) + 1+ capitalized + 1+ whitespaces e.g. ".ROSSI-ESPOSITO MARIO"
+  - "\\.\\([a-z]\\)\\s+" # literal dot + literal parenthesis + 1 lowercase + literal parenthesis + 1+ whitespaces e.g."(a)"
+  - "\\.\\d+\\.\\d+" # literal dot + 1+f digits + literal dot + 1+ digits e.g "0.34"
+  - "L\\d+-\\d+" # "L" + 1+ digits + dash + 1+ digits e.g. "L5-2134"
+  - "(?m)^\\d+[A-Z]+" # multiline + new line + 1+ digits + 1+ capitalized
+  - "(?m)^FIG\\." # multiline + "FIG" + literal dot
+  - "(?!\\.0\\scollinear)\\.0\\s" # e.g. ".0"
+  - "10-"
+  - "\\s+\\.\\s(?!They)The" # " . The" + (-) negative lookahead
+  - "(?m)^123" # multiline + line break + "123"
+  - "\\s\\.This\\s+work\\s*\\nPhys"
+  - "\\s+\\p{Pd}\\s+[0-9]+\\s+\\p{Pd}\\s+" # 1+ whitespaces + any dash + 1+ digits + any dash + 1+ whitespaces
+  - "\\.?Nuclear\\s*Physics,\\s*Section"
+  - "(?m)^0\\n[0-9]+" # newline + "0" + newline + 1+ digits --> this is for cases where graphs' anchor points are parsed weirdly and end up all one new lines in ascending order from zero
+  - "\\s*Physics\\s*Letters\\s*B"
+  - "[–-]?[0-9]+\\n+[–-]?[0-9]+\\n+[–-]?[0-9]+" # minus/dash + number + line break --> pattern repeated e.g. -40 + linebreak + -20
+  - "[Cc]o\\s*d\\s*e\\s*[Aa]\\s*v\\s*a\\s*i\\s*l\\s*i\\s*b\\s*i\\s*l\\s*i\\s*t\\s*y\\s*(?:[Ss]\\s*t\\s*a\\s*t\\s*e\\s*m\\s*e\\s*n\\s*t)?"
+  - "064902-13"
+  - "0.2\\n0.4"
+
+
+start_headers_CAS:
+  - "(?m)^(?<![0-9]+\\.[0-9]+\\n)(\\s*)[Cc]ode\\s*[Aa]vailability\\s*(?:[Ss]tatement)?(?!\\s*and\\s+supplementary\\s+material)" # added lookbehind for index number and lookahead for "and supplementary material"
+  - "(?m)^(?<![0-9]+\\.[0-9]+\\n)(\\s*)C\\s*o\\s*d\\s*e\\s*[Aa]\\s*v\\s*a\\s*i\\s*l\\s*a\\s*b\\s*i\\s*l\\s*i\\s*t\\s*y\\s*(?:[Ss]\\s*t\\s*a\\s*t\\s*e\\s*m\\s*e\\s*n\\s*t)?(?!\\s*and\\s+supplementary\\s+material)" # added lookbehind for index number and lookahead for "and supplementary material"
+  - "CODE\\s+AVAILABILITY"
+  - "C\\s*O\\s*D\\s*E\\s+A\\s*V\\s*A\\s*I\\s*L\\s*A\\s*B\\s*I\\s*L\\s*I\\s*T\\s*Y"
+  - "CODE\\s+AVAILIBILITY"
+  - "C\\s*O\\s*D\\s*E\\s+A\\s*V\\s*A\\s*I\\s*L\\s*I\\s*B\\s*I\\s*L\\s*I\\s*T\\s*Y"
+  - "[Cc]ode\\s+[Aa]vailibility\\s*(?:[Ss]tatement)?\\.?"
+  - "[Cc]o\\s*d\\s*e\\s*[Aa]\\s*v\\s*a\\s*i\\s*l\\s*i\\s*b\\s*i\\s*l\\s*i\\s*t\\s*y\\s*(?:[Ss]\\s*t\\s*a\\s*t\\s*e\\s*m\\s*e\\s*n\\s*t)?"
+
+# similar end patterns to DAS, only regexes for specific edge cases were omitted
+end_headers_CAS:
+  - "(?m)^[ \\t]*[Dd]isclosure\\.?"
+  - "(?m)^[ \\t]*[Cc]on(?:fl|ﬂ)icts\\s+[Oo]f\\s+[Ii]nterest\\.?"
+  - "(?m)^[ \\t]*Appendix:?"
+  - "(?m)^[ \\t]*[Dd]eclarations?"
+  - "(?m)^[ \\t]*[Aa]bbreviations"
+  - "(?m)^[ \\t]*Data\\s+[Aa]vailability\\s*(?:[Ss]tatement)?(?![ \\t]*\\.[ \\t]*\\.)\\.?"
+  - "(?m)^[ \\t]*[Dd]eclaration\\s*[Oo]f\\s*[Ii]nterests\\.?"
+  - "(?m)^\\s*Open\\s+[Aa]ccess"
+  - "(?m)^[ \\t]*[Mm]aterial\\s*[Aa]vailability\\s*(?:[Ss]tatement)?\\.?"
+  - "(?m)^[ \\t]*[Dd]eclaration\\s*[Oo]f\\s*[Cc]ompeting\\s*[Ii]nterests?\\.?"
+  - "(?m)^[ \\t]*[Ff]unding\\.?"
+  - "(?m)^[ \\t]*[Aa]cknowledgments\\.?"
+  - "(?m)^[ \\t]*[Rr]eferences\\.?"
+  - "(?m)^[ \\t]*[Ss]upplementary\\s*[Mm]aterial\\s*[Aa]nd\\s*[Dd]ata"
+  - "(?m)^[ \\t]*\\[[0-9]+\\]\\s*" # newline + 0+ whitespaces + "[" + digit + "]" 
+  - "(?:\\.|\\n)TABLE\\s+[IVX0-9]+(?:\\s*[:.—-])?" # GROUP: literal dot OR linebreak + "TABLE" + 1+ whitespaces + 1+ [I,V,X, 1 digit] + GROUP (optional): 0+ whitespaces + [:, ., —, -] e.g. "TABLE I -"
+  - "(?:\\.|\\n)PHYSICAL"
+  - "(?!.K.)\\.[A-Z]+\\." # (-)lookahead + literal dot + 1+ capitalized + literal dot e.g. ".FIG."
+  - "\\.\\s*(?!\\s*D\\s\\d{1,4})(?:[A-Z]{2}(?:-?[A-Z]+)?\\s*){1,2},?" # (-)lookahead + literal dot + 0+ whitespaces + 1-2*GROUP: 1+ capitalized + dash (optional) + 1+ capitalized + 1+ whitespaces e.g. ".ROSSI-ESPOSITO MARIO"
+  - "\\.\\([a-z]\\)\\s+" # literal dot + literal parenthesis + 1 lowercase + literal parenthesis + 1+ whitespaces e.g."(a)"
+  - "\\.\\d+\\.\\d+" # literal dot + 1+f digits + literal dot + 1+ digits e.g "0.34"
+  - "L\\d+-\\d+" # "L" + 1+ digits + dash + 1+ digits e.g. "L5-2134"
+  - "(?m)^\\d+[A-Z]+" # multiline + new line + 1+ digits + 1+ capitalized
+  - "(?m)^FIG\\." # multiline + "FIG" + literal dot
+  - "(?m)^123" # multiline + line break + "123"
+  - "\\s+\\p{Pd}\\s+[0-9]+\\s+\\p{Pd}\\s+" # 1+ whitespaces + any dash + 1+ digits + any dash + 1+ whitespaces
+  - "\\.?Nuclear\\s*Physics,\\s*Section"
+  - "(?m)^0\\n[0-9]+" # newline + "0" + newline + 1+ digits --> this is for cases where graphs' anchor points are parsed weirdly and end up all one new lines in ascending order from zero
+  - "Table\\s*5\\s*Proposed"
+  - "\\.\\n\\d+\\s+[A-Z]" # period + whitespace + 1+ digit + whitespace + capitalized --> for footnotes on a new line 
+
+data_cleaning:
+  general:
+    - "(?<=[a-z])-(?=[a-z])"
+  ligatures:
+    'ﬀ': 'ff'
+    'ﬁ': 'fi'
+    'ﬂ': 'fl'
+    'ﬃ': 'ffi'
+    'ﬄ': 'ffl'
+    'ﬅ': 'ft'
+    'ﬆ': 'st'
+    'Ꜳ': 'AA'
+    'ꜳ': 'aa'
+    'Æ': 'AE'
+    'æ': 'ae'
+    'Œ': 'OE'
+    'œ': 'oe'
+    'ᵫ': 'ue'
+    'ĳ': 'ij'
+    'Ĳ': 'IJ'
+
+
+section_interruptors: 
+  conjunctions:
+    - "\\band/or\\s*$"
+    - "\\band\\s*$"
+    - "\\bor\\s*$"
+    - "\\bbut\\s*$"
+    - "\\bnor\\s*$"
+    - "\\byet\\s*$"
+    - "\\bso\\s*$"
+    - "\\bwhile\\s*$"
+    - "\\balthough\\s*$"
+    - "\\bbecause\\s*$"
+    - "\\bnot\\s*$"
+
+  prepositions:
+    - "\\bof\\s*$"
+    - "\\bin\\s*$"
+    - "\\bon\\s*$"
+    - "\\bat\\s*$"
+    - "\\bto\\s*$"
+    - "\\bfor\\s*$"
+    - "\\bwith\\s*$"
+    - "\\bfrom\\s*$"
+    - "\\bby\\s*$"
+    - "\\bduring\\s*$"
+    - "\\bthe\\s*$"
+    - "\\ba\\s*$"
+    - "\\ban\\s*$"
+
+section_continuation:
+  junk_artifacts:
+    - "doi"
+    - "©"
+    - "vol.?"
+
+
+
+
+ 
+
+  
+

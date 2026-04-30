@@ -1,0 +1,268 @@
+PROMPT FOR CAS_CLASSIFICATION
+
+"Your task is to classify the following code availability statement (i.e. CAS) sections in scientific papers according to the classification schemata provided below.
+
+Some general information about the classification task.
+
+These are the core priorities of the task you should keep in mind:
+
+1) Find distinct elements of code/software mentioned in the section;
+2) Qualify each as APSA or EST;
+3) Define access conditions for each identifiable element;
+4) Positive boilerplate implies APSA unless contradicted;
+5) Negative boilerplate can be overridden;
+6) ESTs never determine manuscript_code_availability;
+7) APSAs never determine external_tool_availability;
+8) If APSAs have mixed access conditions → partial_access;
+
+The general idea of the task is to classify all identifiably distinct elements of code/software whose access conditions are described in the CAS section. 
+
+Identification of distinct elements comes from grounded or structurally justified references to an element in the section. 
+Identification of distinct elements whose access conditions must be classified does NOT require such elements to be associated with a specific, named software artifact.
+
+For example, the statement:
+
+"Software/code that is associated with this publication and that is publicly available is referenced within the publication content. 
+Python scripts used to produce the results shown in the publication can be provided on reasonable request, 
+provided they don’t contain information that can be associated with unpublished results."
+
+has TWO, distinct identifiable elements of code/software. Out of these two, only ONE is associated with a specific, named software artifact.
+The two elements are:
+
+1) "Software/code that is associated with the study" AND "that is publicly available"
+
+2) "Python scripts" that "can be provided on reasonable request"
+
+These two elements are identified as distinct elements for classification because of two different access conditions being described that DO NOT logically contradict one another. 
+In this case, the first element is described as "publicly available", while the second is described as available "upon request". 
+
+This is NOT the case for sections whose initial statement is later logically contradicted by the statement that follows. 
+
+For example, the statement:
+
+"This manuscript has no associated code/software. [authors’ comment: the code used in this project is publicly available at the following repository: https://github.com/opengpd/gpddatabase (see ref. [78])."
+
+contains a first statement mentioning "no associated code" and a second statement mentioning an Author-Produced Software Artifact. In such case, the first statement can be ignored and does not mark the existence of a separate element to be classified. 
+
+Furthermore, in certain cases the initial statement should be used to qualify access conditions of a later element of code/software.
+
+For example, in the statement: 
+
+"My manuscript has associated code in a repository [49] [author's comment: the code developed in this study is based on the CERN collaboration code, publicly available at https://home.cern/.
+Config files are available upon request.]"
+
+The first boilerplate statement qualifies the access condition for the later-described element "code developed for numerical computation" as "open_access".
+BUT this only occurs for statements where specific conditions are met. Specifically, these must be true:
+
+- The initial statement must NOT have a clear, explicit referent
+- There must be only ONE eligible referent the initial statement could be referring to
+
+A later-mentioned element of code/software is an eligible referent for an initial statement's access condition if and only if these conditions are both true:
+
+1) Scope match: it belongs to the same semantic category as the boilerplate statement (e.g. code/software) 
+
+2) No explicit local access condition: it does not already specify its own access policy in the surrounding text
+
+The initial boilerplate statement access condition may then be applied ONLY IF exactly one eligible referent exists in the same context.
+
+This attribution rule does not apply in the following statement, because no eligible referent is present for the initial boilerplate statement:
+
+"Code will be made available upon request. [author's comment: data are derived from this other dataset [32]. Parameters setting files are internally preserved and cannot be made available]
+
+In this case, "data" are a research artifact NOT matching the semantic category of the initial statement (i.e. code/software), 
+whereas "Parameter settings file" have a defined local access condition (i.e. "available upon request"). 
+
+Once elements of code/software are identified, you may start to classify them. 
+
+The classification is done along TWO dimensions. 
+
+DIMENSION-SPECIFIC INSTRUCTIONS: 
+
+The first dimension is "manuscript_code_availability". 
+This dimension exclusively refers to information about what we refer to as Author-Produced Software Artifacts. 
+
+Author-Produced Software Artifacts (APSAs) have the following characteristics:
+
+- They are elements of code or software that have been produced, adapted or curated by the author(s) of the study. This is a primary defining property;
+- They can be made available, shared or distributed by the authors as part of the manuscript;
+- They are explicitly presented as produced, authored, modified, or packaged by the authors for the study, and can therefore be considered research artifacts;
+- They are typically associated with expressions such as "made available", "be provided", "is shared", "is deposited", "can be accessed", "being generated"; 
+- They might be marked by terms connecting them to authors or to the study, such as "our scripts", "the code for this work", "my files";
+- They might include code, scripts, files, custom-made packages, configs, notebooks, macros, venvs, docker images;
+- They include explicitly referenced environment artifacts CONSTRUCTED BY THE AUTHORS (e.g., virtual environments, Docker images), i.e., packaged setups created or assembled for the study, even if availability is not specified;
+- They DO NOT include any third-party software tools or elements of the computational environment (e.g. Python, third-party Python packages, Wolfram Mathematica) UNLESS these are packaged or provided by the authors as part of the research artifacts
+- They ARE NOT descriptions such as ‘details’, ‘guidance’, or ‘methodological explanations’
+
+Below, an example of a section EXCLUSIVELY discussing availability of an APSA (i.e. "the code can be obtained"):
+
+"This manuscript has no associated code/software. [authors’ comment: the code can be obtained via email from the authors.]."
+
+The following are priority rules you should use EXCLUSIVELY when a section mentions information about multiple Author-Produced Software Artifacts under different access conditions
+(e.g. a section mentioning an APSA is openly available, while another is available upon request):
+
+- if at least one APSA is mentioned as openly available, but not ALL APSAs are mentioned as openly available, the section should be classified as "partial_access";
+- if at least one APSA is mentioned as available upon request AND no other APSA is mentioned as openly available, the section should be classified as "restricted_access"
+
+This is the classification schema you should refer to when classifying sections alongside the "manuscript_code_availability" dimension: $classification_schema_MCA
+The schema includes description for each category of this dimension, exemplars, hard positives/negatives, criteria for inclusion/exclusion and notes on ambiguous cases. 
+
+The following are the existing categories of the dimension "manuscript_code_availability": $manuscript_code_labels
+You must only classify sections using these labels. Please provide a level of confidence in the classification alongside the classification label following the levels provided below.
+
+---
+
+The second dimension of classification is "external_tool_availability". 
+This dimension exclusively refers to information about what we refer to External Software Tools (EST).
+
+External Software Tools must be distinguished from Author-Produced Software Artifacts in the context of this task.
+
+External Software Tools have the following characteristics:
+
+- They are elements of software that are NOT presented as produced, adapted or curated by the author(s) as part of the study;
+- They are elements of software that do not have the characteristic of being made available, shared or distributed specifically by the authors of the manuscript;
+- They are elements of software that are NOT packaged or provided by the author(s) as part of the research artifacts;
+- They are typically associated with expressions such as "We used A", "B was employed", "Open source C package was used";
+- They often refer to elements of third-party software that are used to perform analyses, simulations or computations;
+- They include programming languages, interpreters, proprietary computational softwares, third-party-made programming libraries and packages;
+- They are typically pre-existing, general-purpose tools, not environment artifacts specifically constructed for the study;
+
+Do NOT classify third-party named software (e.g., ROOT, Mathematica, COBAYA, CLASS, PyTorch) as APSA unless explicitly stated as modified, wrapped, or provided by the authors.
+When explicit information about the access conditions of External Software Tools is not provided, you may infer their availability based on general knowledge (e.g., widely known open-source or proprietary status of the software), if such knowledge is reliable.
+
+Below, a list of ETSs and their known access conditions: 
+
+- AliPhysics — open
+- AliRoot — open
+- Athena (ATLAS) — open
+- CAMB — open
+- CLASS — open
+- Cobaya — open
+- Delphes — open
+- FCC software ecosystem — open
+- FEniCSx — open
+- FeynCalc — open
+- Flavio — open
+- GLoBES — open
+- GetDist — open
+- Handles — unknown
+- HEPfit / HepFit — open
+- Herwig — open
+- iEBE-MUSIC — open
+- Key4HEP / key4hep software stack — open
+- Kosmulator — open
+- MadGraph — open
+- Maple — proprietary
+- Mathematica — proprietary
+- MATLAB - proprietary
+- MC Evidence — unknown
+- MILC code — open
+- MuonColliderSoft — open
+- PARTONS — open
+- Pandora / PandoraPFA — open
+- POWHEG BOX — open
+- Python — open
+- Pythia / Pythia8 / Pythia 8.3 — open
+- ROOT — open
+- Sherpa — open
+- SIMULATeQCD — open
+
+If uncertain about the access condition of an External Software Tool, avoid strong assumptions and reflect this in the confidence level.
+
+Below, an example of a section mentioning two ESTs (i.e. "mathematica" and "python"):
+
+"This manuscript has no associated code/software. [authors’ comment: we employed mathematica and python for the numerical computations and graphical analyses presented in this study. 
+No additional code or software was developed or utilised during the course of this research.]"
+
+Remember also that mention of ESTs alone (e.g., Mathematica, Python) does not imply APSA existence unless study-specific computational artifacts are explicitly indicated. 
+
+The following are priority rules you should use EXCLUSIVELY when a section mentions information about multiple External Software Tools under different access conditions
+(e.g. a section mentioning an EST that is free-to-use, while mentioning another that is a proprietary and subscription-based):
+
+- if at least one openly/freely available EST is mentioned, but not ALL ESTs are openly/freely available, the section should be classified as "mixed_tool";
+- if at least one proprietary/subscription-based EST is mentioned AND no other openly/freely available EST is mentioned, the section should be classified as "proprietary_tool"
+
+This is the classification schema you should refer to when classifying sections alongside the "external_tool_availability" dimension: $classification_schema_ETA
+
+The following are the existing categories for the dimension "external_tool_availability": $external_tool_labels
+You must only classify sections using these labels. Also for this dimension, please provide a level of confidence in the classification alongside the classification label.
+
+GENERAL INSTRUCTIONS
+
+Some general characteristics of the classification task are provided below. 
+
+Remember that the first thing you should do after having identified all distinct elements of software is defining whether elements discussed are APSAs or ESTs.
+Once you identified whether the section is talking about APSAs, ESTs or both, you should classify the section alongside the two dimensions described above. 
+
+In certain cases, code availability statements are structured as follows.
+
+- An initial boilerplate sentence where authors specify some generic information about availability of elements of code/software;
+- A second sentence, generally framed as "author's comment" where authors give some specific information about availability of elements of code/software
+
+Information given in the initial boilerplate sentence should be treated asymmetrically depending on the content:
+
+POSITIVE AVAILABILITY CLAIMS
+
+- If the sentence makes a POSITIVE availability claim, that should be treated as evidence of existence of an Author-Produced Software Artifact, UNLESS the later statement explicitly NEGATES the existence of an APSA or is LOGICALLY INCOMPATIBLE with it.
+
+For example, in the statement:
+
+"code/software will be made available on reasonable request. [authors’ comment: no additional remarks.]"
+
+The initial boilerplate sentence specifies THERE IS an Author-Produced Software Artifact that's available upon request.
+Even though no artifact is described explicitly, the initial sentence alone suffices to infer there is an APSA that should be classified as "restricted_access".
+
+On the other hand, in the statement:
+
+"code/software will be made available on reasonable request. [authors’ comment: code/software sharing is not applicable to this paper.]."
+
+The initial sentence specifies there is an APSA that is available upon request, but the later statement specifies that code sharing is not applicable to this paper. 
+The second sentence is logically incompatible with the first. Therefore, the positive availability claim does NOT suffice to assert the existence of an APSA that should be classified as "restricted_access".
+In such cases, the section should be classified as "Unclear" for the "manuscript_code_availability" dimension. 
+
+Remember that a generic positive availability statement (e.g. ‘code/software will be made available’) should be interpreted as referring to an APSA even if no explicit authorship signal is present.
+
+NEGATIVE AVAILABILITY CLAIMS 
+
+- If the sentence makes a NEGATIVE availability claim, that should NOT be treated as DECISIVE evidence of the absence of Author-Produced Software Artifacts IF later contradicted by another statement.
+
+For example, in the statement:
+
+"The manuscript has no associated code/software. [author’s comment: custom mathematica code were used for calculations and can be provided upon reasonable request.]."
+
+The initial boilerplate sentence specifies there is no code associated with the manuscript. The later statement CONTRADICTS the initial statement by saying there is custom code that can be provided upon request.
+Only in cases where an initial NEGATIVE availability claim is made, the information given in the initial boilerplate statement can be overridden by the information given in the later statement.
+Therefore, the statement above is classified as "restricted_access" along the "manuscript_code_availability" dimension. 
+
+---
+
+The following are the levels of confidence you should use to score confidence in the classification alongside their definitions: $confidence_levels.
+
+You must ONLY respond with a JSON object with 4 keys:
+- "manuscript_code_availability" dimension label;
+- "manuscript_code_availability_confidence" dimension level of confidence;
+- "external_tool_availability" dimension label;
+- "external_tool_availability_confidence" dimension level of confidence;
+
+Use ONLY the provided keys for the final classification output. 
+
+Remember that if a section mentions information about code availability, that takes precedence over information about data availability. 
+Therefore, if a section mentions information about code, that information should guide classification whereas information about data should be ignored.
+
+Inside the two classification schemata, you will find examples of hard positives and hard negatives for each category. Hard positives are pairs of statements belonging to the SAME category that are difficult
+to classify as part of the same category. Hard negatives are pairs of statements belonging to DIFFERENT categories that are difficult to classify as being part of different categories. In the hard negative cases,
+the FIRST statement is the one belonging to the relevant category, while the SECOND statement is the one belonging to a different category. 
+
+Below, an example of section and its expected classification:
+
+"This manuscript has no associated code/software. [author’s comment: in this work, we utilized the publicly available software packages cobaya and getdist, with relevant references provided in sect. 2]."
+
+- expected classification:
+    manuscript_code_availability --> APSA --> "no associated code/software" --> no_code
+    level of confidence --> very confident
+    external_tool_availability --> EST --> "publicly available software packages cobaya and getdist" --> open_tool
+    level of confidence --> somewhat confident
+
+- expected output: {"manuscript_code_availability": "no_code",
+                    "manuscript_code_availability_confidence": "very confident",
+                    "external_tool_availability": "open_tool",
+                    "external_tool_availability_confidence": "somewhat confident"}
