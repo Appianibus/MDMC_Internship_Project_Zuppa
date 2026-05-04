@@ -29,11 +29,12 @@ from application.utils import (
     load_document_registry,
     load_doi_list,
     load_extraction_registry,
+    mask_author_comment,
     mask_hyperlink,
     remove_hyphen,
-    remove_ligatures,
     remove_leading_period,
     remove_leading_whitespace,
+    remove_ligatures,
     repair_hyperlink,
     section_reparation_llm,
     split_glued_words,
@@ -689,6 +690,7 @@ def data_cleaner_single_file(
 
         old_sha = df_extraction_registry.loc[
             (df_extraction_registry["stage"] == "cleaned")
+            & (df_extraction_registry["section_type"].eq(section_prefix))
             & (
                 df_extraction_registry["output_sha"].isin(
                     df_base_registry.loc[
@@ -995,13 +997,34 @@ def extract_CAS_section_single_pdf(
 
     df_document_registry["has_CAS"] = df_document_registry["has_CAS"].astype("boolean")  # nullable bool
 
-    dependency_list = set(
-        df_base_registry.loc[
-            df_base_registry["output_type"].isin(
-                ["extracted section", "failed CAS extraction", "failed extraction (missing CAS)"]
-            ),
-            "dependencies",
+    # Generate set of dependency shas to check whether a CAS section was already processed
+
+    # First generate a set with all output shas for all extraction rows whose section type is CAS
+    cas_extraction_shas = set(
+        df_extraction_registry.loc[
+            df_extraction_registry["section_type"].eq("CAS"),
+            "output_sha",
         ].dropna()
+    )
+
+    # Get all dependency shas for rows whose output type is "extracted section" and whose output shas are in the set created above
+    cas_extracted_dependencies = df_base_registry.loc[
+        df_base_registry["output_type"].eq("extracted section")
+        & df_base_registry["output_sha"].isin(cas_extraction_shas),
+        "dependencies",
+    ]
+
+    # Get all dependency shas for rows whose output type is a failed extraction
+    cas_failure_dependencies = df_base_registry.loc[
+        df_base_registry["output_type"].isin(
+            ["failed CAS extraction", "failed extraction (missing CAS)"]
+        ),
+        "dependencies",
+    ]
+
+
+    dependency_list = set(
+        pd.concat([cas_extracted_dependencies, cas_failure_dependencies]).dropna()
     )
 
 
@@ -1125,13 +1148,19 @@ def extract_CAS_section_single_pdf(
             # we iterate over list of possible end headers
             # we save the position of the FIRST occurring pattern
 
-            masked_author_comment_text = author_comment_re.sub(lambda m: " " * len(m.group()), text)
+
+            text_after_start = text[start:]
+
+            masked_author_comment_text = author_comment_re.sub(mask_author_comment, text_after_start)
 
             for pattern in end_patterns:
-                end_match = regex.search(pattern, masked_author_comment_text[start:])
+                end_match = regex.search(pattern, masked_author_comment_text)
 
                 if end_match:
                     relative_end = end_match.start()
+
+                    if not text_after_start[:relative_end].strip():
+                        continue
 
                     end = relative_end + start
 
@@ -1314,7 +1343,7 @@ def classify_CAS_claude_single_file(
             try:
                 response = client.messages.create(
                     model= claude_model,
-                    max_tokens=500,
+                    max_tokens=700,
                     temperature=0,
                     system=[
                         {"type": "text",

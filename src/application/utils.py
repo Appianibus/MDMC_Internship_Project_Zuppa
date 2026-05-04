@@ -671,3 +671,30 @@ def section_reparation_llm(section: str, doc_doi: str, api_key: str = None, mode
             return section
     
     return section
+
+def create_manifest(
+    primary_df: pd.DataFrame,
+    df_base: pd.DataFrame,
+    df_document: pd.DataFrame,
+    primary_columns: list[str] | None = None,
+    base_columns: list[str] | None = None,
+    document_columns: list[str] | None = None,
+) -> pd.DataFrame:
+
+    primary_columns = list(dict.fromkeys(primary_columns or primary_df.columns.tolist()))
+    base_columns = list(dict.fromkeys(base_columns or df_base.columns.tolist()))
+    document_columns = list(dict.fromkeys(document_columns or df_document.columns.tolist()))
+
+    df_base_manifest = df_base[base_columns].drop_duplicates("output_sha", keep="last")
+    df_document_manifest = df_document[document_columns].drop_duplicates("doc_doi", keep="last")
+
+    df_manifest = (
+        primary_df[primary_columns]
+        .merge(df_base_manifest, on="output_sha", how="left")
+        .merge(df_document_manifest, on="doc_doi", how="left")
+    )
+
+    return df_manifest
+
+def mask_author_comment(match: regex.Match) -> str:
+    return "".join("\n" if char == "\n" else "x" for char in match.group())

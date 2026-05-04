@@ -125,3 +125,26 @@ section_reparation_llm:
 - data_cleaner_single_file:
     - A lot of texts ended up with multiple periods otherwise
 
+## v1.0.5 - 2026-05-04
+### Changes
+- classification_schema_CAS
+    - added exemplar and note on CMS data preservation, reuse and open access policy to open_access category
+
+- extract_CAS_section_single_pdf
+    - changed the calculation of the dependency set to calculate an initial set of output shas where "section_type" in the extraction registry is "CAS". Use those shas to calculate the dependency set from the base registry
+    - changed author comment masking so that masking is applied only after the CAS start header
+    - changed masked author comments to preserve newlines while replacing non-newline characters with lowercase placeholders
+    - changed end-pattern selection so that end matches producing empty or whitespace-only CAS sections are ignored
+
+### Justifications
+- classification_schema_CAS
+    - Sections mentioning the CMS data preservation, reuse and open access policy where previously classified as "unclear". This is incorrect given the policy mandates open access data
+
+- extract_CAS_section_single_pdf
+    - fixed a bug where dependency calculation was not taking into account "section_type". Therefore, a large number of txt files whose DAS had been extracted were not processed for CAS extraction up until this point, since their sha was already present among dependencies for output_type == "extracted_section" in the base registry
+    - fixed a bug where unclosed author comments before the CAS start could mask the actual CAS section, leading to empty/"nan" extractions
+    - fixed a bug where the all-caps end pattern matched immediately after CAS headers followed by acronyms such as "ATLAS", leading to empty/"nan" extractions
+    - full-population verification on existing successful CAS extraction rows showed no proposed extraction failures and no shortened outputs; the changed cases restored author comments or recovered missing CAS text
+
+
+ 
