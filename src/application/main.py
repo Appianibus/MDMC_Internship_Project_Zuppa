@@ -50,7 +50,7 @@ def classify_files(df_document: pd.DataFrame,
 # these rows are saved in a list which is then concatenated to an exisiting registry
 # this way registries are updated every time new files are processed 
 
-def extract_texts(df_base: pd.DataFrame, df_raw: pd.DataFrame, version_object: VersionObject) -> tuple[pd.DataFrame, pd.DataFrame]:
+def extract_texts(df_base: pd.DataFrame, df_raw: pd.DataFrame, version_object: VersionObject, force_processing: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
     merged_df = df_raw.merge(
     df_base[["output_sha", "doc_doi"]],
     on="output_sha",
@@ -65,7 +65,9 @@ def extract_texts(df_base: pd.DataFrame, df_raw: pd.DataFrame, version_object: V
 
     dependency_set = set(
     df_base.loc[
-        df_base["output_sha"].isin(df_raw.loc[df_raw["file_type"] == "txt", "output_sha"]),
+        df_base["output_sha"].isin(df_raw.loc[df_raw["file_type"] == "txt", "output_sha"])
+        & (df_base["software_version"] == version_object.software_version)
+        & (df_base["pipeline_version"] == version_object.pipeline_version),
         "dependencies",
     ].dropna()
 )
@@ -79,7 +81,7 @@ def extract_texts(df_base: pd.DataFrame, df_raw: pd.DataFrame, version_object: V
 
         folder_doi = doc_doi.replace("/", "_")
 
-        base_row, raw_row = extract_text_single_pdf(pdf_path, doc_doi, folder_doi, version_object, dependency_set)
+        base_row, raw_row = extract_text_single_pdf(pdf_path, doc_doi, folder_doi, version_object, dependency_set, force_processing=force_processing)
 
         if base_row is None and raw_row is None:
             timed_out_files.append(pdf_path)
@@ -173,7 +175,9 @@ def normalize_sections(df_base: pd.DataFrame, df_extraction: pd.DataFrame, versi
 
         section_type = ["DAS", "CAS"]
     
-    merged_df_3 = df_extraction.merge(df_base[["output_sha", "doc_doi", "software_version"]], on="output_sha", how="left")
+    merged_df_3 = df_extraction.merge(
+        df_base[["output_sha", "doc_doi", "software_version", "pipeline_version"]], on="output_sha", how="left"
+    )
 
     dependency_set = set(
     df_base.loc[
@@ -181,12 +185,19 @@ def normalize_sections(df_base: pd.DataFrame, df_extraction: pd.DataFrame, versi
             df_extraction.loc[(df_extraction["stage"] == "cleaned")
                               & (df_extraction["section_type"].isin(section_type)), 
                               "output_sha"]
-        ),
+        )
+        & (df_base["software_version"] == version_object.software_version)
+        & (df_base["pipeline_version"] == version_object.pipeline_version),
         "dependencies",
     ].dropna()
 )
 
-    rows = merged_df_3.loc[(merged_df_3["section_type"].isin(section_type)) & (merged_df_3["stage"] == "pre-cleaning") & (merged_df_3["software_version"] == version_object.software_version)]
+    rows = merged_df_3.loc[
+        (merged_df_3["section_type"].isin(section_type))
+        & (merged_df_3["stage"] == "pre-cleaning")
+        & (merged_df_3["software_version"] == version_object.software_version)
+        & (merged_df_3["pipeline_version"] == version_object.pipeline_version)
+    ]
 
     for _, row in tqdm(rows.iterrows(), total=len(rows), desc=f"Cleaning {section_type}", unit="section(s)"):
         path = resolve_registry_path(row["file_path"])
@@ -226,18 +237,23 @@ def classify_DAS_sections(
     checkpoint_interval: int = 50,
 ) -> None:
     
-    merged_df_classification = df_extraction.merge(df_base[["output_sha", "doc_doi", "software_version"]], on="output_sha", how="left")
+    merged_df_classification = df_extraction.merge(
+        df_base[["output_sha", "doc_doi", "software_version", "pipeline_version"]], on="output_sha", how="left"
+    )
 
     merged_df_classification = merged_df_classification.drop_duplicates()
 
     dependency_set = set(df_base.loc[df_base["output_sha"].isin(
-    df_classification.loc[df_classification["method"]=="LLM", "output_sha"]),
+    df_classification.loc[df_classification["method"]=="LLM", "output_sha"])
+    & (df_base["software_version"] == version_object.software_version)
+    & (df_base["pipeline_version"] == version_object.pipeline_version),
     "dependencies"
 ])
 
     cleaned_DAS_rows = merged_df_classification.loc[(merged_df_classification["section_type"]=="DAS") 
     & (merged_df_classification["stage"]=="cleaned") & 
-    (merged_df_classification["software_version"]==version_object.software_version)]
+    (merged_df_classification["software_version"]==version_object.software_version) &
+    (merged_df_classification["pipeline_version"]==version_object.pipeline_version)]
 
     rows_since_checkpoint = 0
 
@@ -279,18 +295,23 @@ def classify_CAS_sections(
     checkpoint_interval: int = 50,
 ) -> None:
     
-    merged_df_classification = df_extraction.merge(df_base[["output_sha", "doc_doi", "software_version"]], on="output_sha", how="left")
+    merged_df_classification = df_extraction.merge(
+        df_base[["output_sha", "doc_doi", "software_version", "pipeline_version"]], on="output_sha", how="left"
+    )
 
     merged_df_classification = merged_df_classification.drop_duplicates()
 
     dependency_set = set(df_base.loc[df_base["output_sha"].isin(
-    df_CAS_classification.loc[df_CAS_classification["method"]=="LLM", "output_sha"]),
+    df_CAS_classification.loc[df_CAS_classification["method"]=="LLM", "output_sha"])
+    & (df_base["software_version"] == version_object.software_version)
+    & (df_base["pipeline_version"] == version_object.pipeline_version),
     "dependencies"
 ])
 
     cleaned_CAS_rows = merged_df_classification.loc[(merged_df_classification["section_type"]=="CAS") 
     & (merged_df_classification["stage"]=="cleaned") & 
-    (merged_df_classification["software_version"]==version_object.software_version)]
+    (merged_df_classification["software_version"]==version_object.software_version) &
+    (merged_df_classification["pipeline_version"]==version_object.pipeline_version)]
 
     rows_since_checkpoint = 0
 

@@ -218,6 +218,9 @@ categories:
         - The section states that one or more APSAs are not available under any circumstance
     ambiguous_cases_notes:
       - >
+        You MUST classify statements stating "this article has associated code in a code repository." as part of the "open_access" category. 
+        Even though access conditions are underspecified, we deliberately treat this statement as a marker of "open_access" if it appears alone. 
+      - >
         The statement "My manuscript has associated code/software in a data repository. [author’s comment: all analytical computations reported in this manuscript have been rechecked in the computer algebra system maple.
         Two maple sheets corresponding to the extreme and non extreme cases can be found in supplementary materials and in the repository below. 
         The discretization of differential operators (23)–(25) and (41)–(43) using the tchebyshev type spectral method is equally performed in maple computer algebra system. 
@@ -326,7 +329,7 @@ categories:
         In the negative example of the pair, the first distinct identifiable element of code/software is an EST. This is because there is a generic reference to "codes" already available with no authorship or provision linguistic signal.
         Since no identifiable APSA is described as openly available, the section is NOT classified as part of this category.  
   - category_name: restricted_access
-    category_description: This category includes code availability statementsstating that the Author-Produced Software Artifacts mentioned are available upon requesting them.
+    category_description: This category includes code availability statements stating that the Author-Produced Software Artifacts mentioned are available upon requesting them.
     category_exemplars:
       - "the code used in this paper is available from the corresponding author on reasonable request."
       - "code/software will be made available on reasonable request. [author’s comment: the code/software generated during and/or analysed during the current study is available from the corresponding author on reasonable request.]."

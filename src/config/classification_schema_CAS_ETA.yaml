@@ -225,7 +225,7 @@ categories:
       - > 
         All negative examples in the first, second and third hard negatives do NOT exclusively mention External Software Tools that are proprietary. Therefore, they are not classified as "proprietary_tool". 
   - category_name: unknown_status_tool
-    category_description: this category includes code availability statements that only External Software Tools whose access conditions (i.e. open, proprietary) are unknown. 
+    category_description: this category includes code availability statements mentioning that only External Software Tools whose access conditions (i.e. open, proprietary) are unknown were used. 
     category_exemplars: 
       - "this manuscript has no associated code/software. [author's comment: we used a computation software for numerical analysis in this manuscript]"
       - "this manuscript has associated code/software [author's comment: our code can be found at the following repository [14]. Software tools were used for some simulations carried out in the manuscript]"

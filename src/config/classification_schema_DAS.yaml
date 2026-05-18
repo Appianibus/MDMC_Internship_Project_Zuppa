@@ -338,7 +338,7 @@ categories:
         The reason why data cannot be made accessible is irrelevant for classification into this category. Different sections might specify different reasons 
         (e.g. confidentiality, terms of use, no reason) why data cannot be made accessible under any circumstances. As long as the content of a section states or implies that data is not accessible,
         the section should be classified as part of this category. 
-  - category_name: incorrect # handle case where info about data is in the author's comment --> ASK MT
+  - category_name: incorrect 
     category_description: This category includes data availability statements stating information not pertaining to data availability.
     category_exemplars: 
       - "The code is available at the GitHub repository link provided in the manuscript. 2https://github.com/salnikov-dmitry/lsw"

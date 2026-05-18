@@ -146,6 +146,7 @@ from application.utils import (
     load_DAS_classification_registry,
     load_document_registry,
     load_extraction_registry,
+    load_raw_registry
 )
 from config.config import VersionObject
 

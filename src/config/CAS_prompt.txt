@@ -106,6 +106,10 @@ The following are priority rules you should use EXCLUSIVELY when a section menti
 This is the classification schema you should refer to when classifying sections alongside the "manuscript_code_availability" dimension: $classification_schema_MCA
 The schema includes description for each category of this dimension, exemplars, hard positives/negatives, criteria for inclusion/exclusion and notes on ambiguous cases. 
 
+Remember this ad-hoc rule: the statement: "this article has associated code in a code repository." MUST be classified as part of the "open_access" category. 
+Even though access conditions are underspecified, we deliberately treat this statement as a marker of "open_access" if it appears alone. 
+
+
 The following are the existing categories of the dimension "manuscript_code_availability": $manuscript_code_labels
 You must only classify sections using these labels. Please provide a level of confidence in the classification alongside the classification label following the levels provided below.
 

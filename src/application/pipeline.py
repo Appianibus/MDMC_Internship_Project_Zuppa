@@ -98,8 +98,6 @@ def data_ingestion(
             else:
                 folder_doi = doc_doi.replace("/", "_")
 
-                doi_set.add(doc_doi)
-
                 record_dir = Path(
                     RECORDS_DIR
                     / version_object.software_version
@@ -117,6 +115,9 @@ def data_ingestion(
                 title = title_data[0]["title"] if title_data else None
 
                 pdf_file = next((f for f in files if f.get("filetype") == "pdf"), None)
+
+                pdf_registered = False
+                xml_registered = False
 
                 if pdf_file:
                     pdf_url = pdf_file["file"]
@@ -166,6 +167,18 @@ def data_ingestion(
                             df_raw.to_csv(SUBREGISTRIES_DIR / "raw_file_output_registry.csv", index=False)
 
                             existing_hashes.add(output_sha)
+                            pdf_registered = True
+
+                        else:
+                            pdf_registered = bool(
+                                (
+                                    (df_base["output_sha"] == output_sha)
+                                    & (df_base["doc_doi"] == doc_doi)
+                                ).any()
+                            )
+                else:
+                    pdf_filename = None
+                    pdf_url = None
 
                 xml_file = next((f for f in files if f.get("filetype") == "xml"), None)
 
@@ -217,6 +230,23 @@ def data_ingestion(
                             df_raw.to_csv(SUBREGISTRIES_DIR / "raw_file_output_registry.csv", index=False)
 
                             existing_hashes.add(output_sha)
+                            xml_registered = True
+
+                        else:
+                            xml_registered = bool(
+                                (
+                                    (df_base["output_sha"] == output_sha)
+                                    & (df_base["doc_doi"] == doc_doi)
+                                ).any()
+                            )
+                else:
+                    xml_filename = None
+                    xml_url = None
+
+                if not pdf_registered:
+                    print(f"PDF not registered for DOI {doc_doi}, skipping metadata registration")
+                    scanned_pbar.update(1)
+                    continue
 
                 author_data = record_metadata.get("authors", [])
 
@@ -234,9 +264,11 @@ def data_ingestion(
 
                 journal_title = publication_data.get("journal_title")
 
-                arxiv_data = record.get("arxiv_eprints", [])
+                arxiv_data = record_metadata.get("arxiv_eprints", [])
 
-                arxiv_eprints_category = arxiv_data[0].get("categories") if arxiv_data else None
+                arxiv_categories = arxiv_data[0].get("categories") if arxiv_data else None
+
+                arxiv_eprints_category = "; ".join(arxiv_categories) if arxiv_categories else None
 
                 document_row = {
                     "doc_doi": doc_doi,
@@ -250,9 +282,9 @@ def data_ingestion(
                     "journal": journal_title,
                     "arxiv_eprints_category": arxiv_eprints_category,
                     "country": country,
-                    "has_XML": xml_file is not None,
-                    "xml_filename": xml_filename if xml_file else None,
-                    "xml_url": xml_url if xml_file else None,
+                    "has_XML": xml_registered,
+                    "xml_filename": xml_filename if xml_registered else None,
+                    "xml_url": xml_url if xml_registered else None,
                     "creation_date": today_str,
                 }
 
@@ -261,6 +293,8 @@ def data_ingestion(
                 )
 
                 df_document.to_csv(REGISTRIES_DIR / "document_registry.csv", index=False)
+
+                doi_set.add(doc_doi)
 
                 metadata_pbar.update(1)
 
@@ -428,7 +462,9 @@ def extract_DAS_section_single_pdf(
         df_base_registry.loc[
             df_base_registry["output_type"].isin(
                 ["extracted section", "failed DAS extraction", "failed extraction (missing DAS)"]
-            ),
+            )
+            & (df_base_registry["software_version"] == version_object.software_version)
+            & (df_base_registry["pipeline_version"] == version_object.pipeline_version),
             "dependencies",
         ].dropna()
     )
@@ -1010,7 +1046,9 @@ def extract_CAS_section_single_pdf(
     # Get all dependency shas for rows whose output type is "extracted section" and whose output shas are in the set created above
     cas_extracted_dependencies = df_base_registry.loc[
         df_base_registry["output_type"].eq("extracted section")
-        & df_base_registry["output_sha"].isin(cas_extraction_shas),
+        & df_base_registry["output_sha"].isin(cas_extraction_shas)
+        & (df_base_registry["software_version"] == version_object.software_version)
+        & (df_base_registry["pipeline_version"] == version_object.pipeline_version),
         "dependencies",
     ]
 
@@ -1018,7 +1056,9 @@ def extract_CAS_section_single_pdf(
     cas_failure_dependencies = df_base_registry.loc[
         df_base_registry["output_type"].isin(
             ["failed CAS extraction", "failed extraction (missing CAS)"]
-        ),
+        )
+        & (df_base_registry["software_version"] == version_object.software_version)
+        & (df_base_registry["pipeline_version"] == version_object.pipeline_version),
         "dependencies",
     ]
 
