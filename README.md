@@ -1,4 +1,4 @@
-# SCOAP repository analysis through Availability Statement Analyzer
+# A data-processing pipeline for analyzing availability statements in high-energy physics publications
 
 The following is a python pipeline for collecting SCOAP3 papers, extracting Data Availability Statements (DAS) and Code Availability Statements (CAS) sections, cleaning the extracted sections, and classifying them according to described access conditions of data/code.
 
